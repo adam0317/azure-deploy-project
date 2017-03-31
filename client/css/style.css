@@ -1,0 +1,42 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.nav>li>a {
+  color: #fff;
+}
+.nav>li>a:hover {
+  color: #182E49;
+}
+
+.nav>li>a:focus {
+   color: #182E49;
+}
+
+
+.blue {
+  background-color: #182E49;
+  height: 100px;
+  width: 100%;
+}
+
+.header {
+  margin: 20px 0 0 0;
+}
+
+.main-image {
+  margin: 15px auto;
+  display: block;
+  width: 100%;
+}
+
+.img-responsive{
+  margin: 0 auto;
+} 
+
+.monies {
+  font-size: 88px;
+  font-weight: 700;
+  color: firebrick;
+  text-align: center;
+}

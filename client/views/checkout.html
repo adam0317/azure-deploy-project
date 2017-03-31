@@ -1,0 +1,17 @@
+<div class="container">
+	<div class="text-center">
+
+	<h1>Checkout</h1>
+	<button type="button" class="btn btn-lg btn-success" ng-click="placeOrder()">Click Here To Place Your Order</button>
+
+	</div>
+	<div class="row">
+
+		<div ng-repeat="item in cart track by $index" class="col-lg-4">
+		<h2 class="text-center">{{item.name}}<br>{{item.sell_price | currency}}</h2>
+		<img src="{{item.image_url}}" alt="" class="img-responsive">
+		<button type="button" class="btn btn-large btn-block btn-danger" ng-click="removeFromCart(item)">Remove From Cart</button>
+	</div>
+
+	</div>
+</div>
