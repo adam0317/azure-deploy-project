@@ -14,11 +14,16 @@ var massiveInstance = massive.connectSync({
 var app             = express();
 var port = process.env.PORT || 8081;
 
-
 app.use(bodyParser.json());
+
+app.set('db', massiveInstance);
+module.exports      = app;
+var apiRoutes       = require('./api/apiRoutes.js');
+var dbController    = require('./api/dbController.js');
+
 app.use('/scripts', express.static(__dirname + '/client/node_modules'));
 app.use('/styles', express.static(__dirname + '/client/node_modules'));
-
+app.use('/api', apiRoutes);
 // app.get('/', function (req, res) {
 //   res.sendFile(__dirname + '/client/index.html');
 // });

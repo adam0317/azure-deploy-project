@@ -1,9 +1,9 @@
 var express = require('express');
-var app = require('../index.js');
+var app = require('../server.js');
 var apiRoutes = express.Router();
 var db = app.get('db');
 var jwt    = require('jsonwebtoken');
-var dbController = require('../dbController.js');
+var dbController = require('./dbController.js');
 
 //Create a new user
 apiRoutes.post('/newuser', dbController.newUser);

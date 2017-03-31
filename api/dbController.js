@@ -1,4 +1,4 @@
-var app = require('./index.js');
+var app = require('../server.js');
 var db = app.get('db');
 
 exports.newUser = function (req, res) {
