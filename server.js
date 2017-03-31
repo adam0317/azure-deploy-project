@@ -12,7 +12,7 @@ var massiveInstance = massive.connectSync({
   connectionString:   process.env.connectionString || config.connectionString
 });
 var app             = express();
-var port = process.env.PORT || 8081;
+var port = process.env.port || 8081;
 
 app.use(bodyParser.json());
 
