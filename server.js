@@ -16,7 +16,8 @@ var port = process.env.PORT || 8081;
 
 
 app.use(bodyParser.json());
-
+app.use('/scripts', express.static(__dirname + '/client/node_modules'));
+app.use('/styles', express.static(__dirname + '/client/node_modules'));
 
 // app.get('/', function (req, res) {
 //   res.sendFile(__dirname + '/client/index.html');
