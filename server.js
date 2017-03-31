@@ -10,7 +10,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 if (process.env.node_env) {
 	var massiveInstance = massive.connectSync({
-		connectionString: process.env.connectionString
+		connectionString: process.env.connect
 	});
 }
 
