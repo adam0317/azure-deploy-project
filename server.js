@@ -8,6 +8,7 @@ var favicon      = require('serve-favicon');
 var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
+var cors = require('cors');
 if (process.env.node_env) {
 	var massiveInstance = massive.connectSync({
 		connectionString: process.env.connect
@@ -16,7 +17,7 @@ if (process.env.node_env) {
 
 var app = express();
 var port = process.env.port || 8081;
-
+app.use(cors());
 app.use(bodyParser.json());
 
 app.set('db', massiveInstance);
