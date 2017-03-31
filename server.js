@@ -27,8 +27,8 @@ app.use('/api', apiRoutes);
 // app.get('/', function (req, res) {
 //   res.sendFile(__dirname + '/client/index.html');
 // });
-
-app.use(express.static(path.resolve(__dirname, 'client')));
+app.use('/', express.static(path.resolve(__dirname, 'client')));
+//app.use(express.static(path.resolve(__dirname, 'client')));
 
 app.listen(port, function () {
   console.log('Listening on port ' + port);
