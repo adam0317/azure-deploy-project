@@ -3,11 +3,9 @@
 	
 		//var host = $location.$$protocol + '://' + $location.$$host;
 		var host = new window.URL($location.absUrl()).origin;
-		// if ($location.port) {
-		// 	host += ':' + $location.port();
-		// }
+
 		this.test = function () {
-			console.log(host);
+			
 			return "this service is working";
 		}
 

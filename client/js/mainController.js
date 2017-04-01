@@ -1,10 +1,13 @@
 (function () {
 	angular.module('app').controller('mainController', function ($scope, mainService, cartService) {
 		var data = {};
-		$scope.cart = JSON.parse(localStorage.getItem('allEntries'));
+		
+		function getCart() {
+			$scope.cart = cartService.getCart();
+		}
+		getCart();
 
-
-		//console.log($scope.cart);
+	
 		$scope.login = function () {
 			data.username = $scope.username;
 			data.password = $scope.password;
@@ -17,33 +20,39 @@
 		function getProducts() {
 			mainService.getProducts().then(function (response) {
 				$scope.products = response;
+				
 			})
 		}
 
 		$scope.removeFromCart = function (item) {
 			console.log('mainController removeFromCart Fired');
 			cartService.removeFromCart(item);
+			getCart();
+			$scope.totalPrice = cartService.getTotalPrice();
 		}
 
-		$scope.checkout = function () {
-			$scope.totalPrice = cartService.checkout();
-		}
-		if ($scope.cart) {
-			$scope.checkout();
-		}
+		
+			$scope.totalPrice = cartService.getTotalPrice();
+			
+		// if ($scope.cart) {
+		// 	$scope.checkout();
+			
+		// }
 		//
 
 		$scope.addToCart = function ($index) {
 			var item = $scope.products[$index];
 			cartService.addToCart(item);
+			getCart();
+			$scope.totalPrice = cartService.getTotalPrice();
 			
 		}
 
 		$scope.placeOrder = function () {
 			localStorage.removeItem('allEntries');
+			getCart();
+			$scope.totalPrice = cartService.getTotalPrice();
 		}
-
-
 
 
 
@@ -51,7 +60,7 @@
 			//cartService.cartServiceTest(); // => working
 			mainService.test();
 		}
-		testServices();
+		//testServices();
 		getProducts();
 
 

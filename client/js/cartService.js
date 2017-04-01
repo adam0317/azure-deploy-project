@@ -6,7 +6,7 @@
 			// Parse any JSON previously stored in allEntries
 			var existingEntries = JSON.parse(localStorage.getItem("allEntries"));
 			if (existingEntries == null) existingEntries = [];
-			
+
 			localStorage.setItem("item", JSON.stringify(item));
 			// Save allEntries back to local storage
 			existingEntries.push(item);
@@ -21,19 +21,23 @@
 			if (existingEntries == null) {
 				return;
 			}
-			for (var i = existingEntries.length-1; i >= 0; i--) {
+			for (var i = existingEntries.length - 1; i >= 0; i--) {
 				if (item.id == existingEntries[i].id) {
 					console.log('match');
 					existingEntries.splice(i, 1);
 					localStorage.setItem("allEntries", JSON.stringify(existingEntries));
-					
-				}	
+
+				}
 			}
-			
+
 		}
 
-		this.checkout = function (items) {
+		this.getTotalPrice = function (items) {
 			var existingEntries = JSON.parse(localStorage.getItem("allEntries"));
+			if (!existingEntries) {
+				console.log("Nothing In Cart");
+				return 0;
+			}
 			var totalPrice = 0;
 			existingEntries.forEach(function (e) {
 				console.log(e.sell_price);
@@ -42,21 +46,23 @@
 			console.log(totalPrice);
 			return totalPrice;
 		}
-			
+
 
 
 		this.getCart = function () {
-			if (JSON.parse(localStorage.getItem('item'))) {
-				var arr = JSON.parse(localStorage.getItem('item'));
+			if (JSON.parse(localStorage.getItem('allEntries'))) {
+				var arr = JSON.parse(localStorage.getItem('allEntries'));
 				return arr;
 			}
 			else {
-				return ['empty array'];
+				return [];
 			}
 		}
 
 		this.cartServiceTest = function () {
 			console.log('working');
 		}
+
+
 	})
 })();
