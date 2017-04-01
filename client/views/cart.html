@@ -1,5 +1,6 @@
 <div class="container">
 
+<div class="text-center"><h1>Total In Cart {{totalPrice | currency}}</div>
 
 	<div ng-repeat="item in cart track by $index" class="col-lg-4">
 		<h2 class="text-center">{{item.name}} </h2>
