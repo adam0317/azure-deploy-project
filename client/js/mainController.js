@@ -48,9 +48,10 @@
 
 
 		function testServices() {
-			cartService.cartServiceTest(); // => working
+			//cartService.cartServiceTest(); // => working
+			mainService.test();
 		}
-		//testServices();
+		testServices();
 		getProducts();
 
 

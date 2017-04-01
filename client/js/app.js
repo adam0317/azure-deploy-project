@@ -1,5 +1,11 @@
 (function () {
-	angular.module('app', ['ui.router']).config(function ($stateProvider, $urlRouterProvider) {
+
+	var env = {};
+
+	if (window) {
+		Object.assign(env, window.__env);
+	}
+	var app = angular.module('app', ['ui.router']).config(function ($stateProvider, $urlRouterProvider) {
 		
 		$stateProvider.state('home', {
 			url: "/",
@@ -39,5 +45,7 @@
 
 
 	})
+
+	app.constant('__env', env);
 
 })();

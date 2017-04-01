@@ -22,9 +22,10 @@ var user = {
 }
 
 exports.getProducts = function (req, res) {
+  
   db.products.find(function (err, products) {
     if (err) {
-      console.log(err);
+      console.log('taco' + err);
       res.send(err);
     }
     res.send(products);

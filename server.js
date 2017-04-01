@@ -14,6 +14,12 @@ if (process.env.node_env) {
 		connectionString: process.env.connect
 	});
 }
+if (!process.env.node_env) {
+	var config     = require('./config.js');
+	var massiveInstance = massive.connectSync({
+		connectionString: config.connectionString
+	});
+}
 
 var app = express();
 var port = process.env.port || 8081;
