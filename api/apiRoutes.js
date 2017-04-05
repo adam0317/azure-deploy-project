@@ -4,7 +4,8 @@ var apiRoutes = express.Router();
 var db = app.get('db');
 var jwt    = require('jsonwebtoken');
 var dbController = require('./dbController.js');
-
+var bcrypt = require('bcrypt');
+var passwordService = require('./passwordService');
 //Create a new user
 apiRoutes.post('/newuser', dbController.newUser);
 
@@ -17,10 +18,13 @@ apiRoutes.get('/product', dbController.getProducts);
 
 
 apiRoutes.post('/login', function(req, res) {
-	console.log(req.body.username);
+	console.log(req.body.email);
+	console.log(req.body.password);
+//var password = passwordService.validPassword(req.body.password);
+  //console.log(password);
   // find the user
   db.users.findOne({
-    username: req.body.username
+    email: req.body.email
   }, function(err, user) {
 
     if (err) throw err;
@@ -30,9 +34,11 @@ apiRoutes.post('/login', function(req, res) {
     } else if (user) {
 
       // check if password matches
-      if (user.password != req.body.password || !req.body.password) {
+      if(!passwordService.validPassword(req.body.password, user.password)){
         res.json({ success: false, message: 'Authentication failed. Wrong password.' });
-      } else {
+        console.log('True');
+      }
+      else {
 
         // if user is found and password is right
         // create a token

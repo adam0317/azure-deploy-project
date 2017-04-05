@@ -11,12 +11,10 @@ exports.newUser = function (req, res) {
     password: req.body.password
 
   }
-function test(response){
-  console.log(response);
-}
-  console.log(user.password);
+
+
   user.password = passwordService.hashPassword(user.password);
-  console.log(user.password);
+ 
 
   db.users.save(user, function (err, result) {
     console.log(result);
