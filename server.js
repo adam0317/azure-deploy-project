@@ -10,24 +10,27 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var cors = require('cors');
 var bcrypt = require('bcrypt');
-if (process.env.node_env) {
-	var massiveInstance = massive.connectSync({
-		connectionString: process.env.connect
-	});
-}
-if (!process.env.node_env) {
-	var config     = require('./config.js');
-	var massiveInstance = massive.connectSync({
-		connectionString: config.connectionString
-	});
-}
 
 var app = express();
 var port = process.env.port || 8081;
 app.use(cors());
 app.use(bodyParser.json());
 
+if (process.env.node_env) {
+	var massiveInstance = massive.connectSync({
+		connectionString: process.env.connect
+	});
+	app.set('superSecret', process.env.secret);
+}
+if (!process.env.node_env) {
+	var config     = require('./config.js');
+	var massiveInstance = massive.connectSync({
+		connectionString: config.connectionString
+	});
+app.set('superSecret', config.secret);
+}
 app.set('db', massiveInstance);
+
 module.exports = app;
 var apiRoutes = require('./api/apiRoutes.js');
 var dbController = require('./api/dbController.js');
