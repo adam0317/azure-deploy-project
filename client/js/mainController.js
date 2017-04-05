@@ -1,6 +1,6 @@
 (function () {
 	angular.module('app').controller('mainController', function ($scope, mainService, cartService) {
-		var data = {};
+		
 		
 		function getCart() {
 			$scope.cart = cartService.getCart();
@@ -9,6 +9,7 @@
 
 	
 		$scope.login = function () {
+			var data = {};
 			data.username = $scope.username;
 			data.password = $scope.password;
 			console.log('this fired');
