@@ -9,14 +9,7 @@
 			return "this service is working";
 		}
 
-		this.login = function (data) {
-			console.log(data);
-			var deferred = $q.defer();
-			$http.post(host + '/api/login', data).then(function (response) {
-				deferred.resolve(response);
-			})
-			return deferred.promise;
-		}
+		
 
 		this.getProducts = function () {
 			var deferred = $q.defer();

@@ -14,13 +14,12 @@
 			})
 			
 		}
+		
 
-		$scope.login = function () {
-			var data = {};
-			data.username = $scope.username;
-			data.password = $scope.password;
+		$scope.login = function (user) {
+			
 			console.log('this fired');
-			mainService.login(data).then(function (response) {
+			userService.login(user).then(function (response) {
 				console.log(response);
 			})
 		}
