@@ -1,5 +1,5 @@
 (function () {
-	angular.module('app').controller('mainController', function ($scope, mainService, cartService) {
+	angular.module('app').controller('mainController', function ($scope, mainService, cartService, userService) {
 		
 		
 		function getCart() {
@@ -7,7 +7,14 @@
 		}
 		getCart();
 
-	
+		$scope.register = function (data) {
+			userService.register(data).then(function (response) {
+				$scope.user = response;
+				
+			})
+			
+		}
+
 		$scope.login = function () {
 			var data = {};
 			data.username = $scope.username;
@@ -61,7 +68,7 @@
 			//cartService.cartServiceTest(); // => working
 			mainService.test();
 		}
-		//testServices();
+		testServices();
 		getProducts();
 
 

@@ -3,14 +3,9 @@ var db = app.get('db');
 
 exports.newUser = function (req, res) {
 var user = {
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
+    first_name: req.body.fname,
+    last_name: req.body.lname,
     email: req.body.email,
-    username: req.body.username,
-    street_address: req.body.street_address,
-    city: req.body.city,
-    state: req.body.state,
-    zip: req.body.zip,
     password: req.body.password
   }
 

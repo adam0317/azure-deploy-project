@@ -9,6 +9,7 @@ var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var cors = require('cors');
+var crypto = require('crypto');
 if (process.env.node_env) {
 	var massiveInstance = massive.connectSync({
 		connectionString: process.env.connect
