@@ -36,21 +36,19 @@
 			var defer = $q.defer();
 			
 			var token = {
+				//"token": "taco"
 				"token": localStorage.getItem('token')
 			}
-			console.log(token);
+			//console.log(token);
 			$http.post(host + '/api/account', token).then(function (response) {
 				if (response.status != 200) {
+					console.log(response.status);
 					defer.resolve(response);
 				}
 				else {
-					var user = {
-						first_name: response.data.first_name,
-						last_name: response.data.last_name,
-						id: response.data.id
-
-					}
-					defer.resolve(user);
+					console.log(response);
+					
+					defer.resolve(response);
 				}
 			})
 			return defer.promise;

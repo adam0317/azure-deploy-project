@@ -70,7 +70,7 @@ apiRoutes.use(function(req, res, next) {
     // verifies secret and checks exp
     jwt.verify(token, app.get('superSecret'), function(err, decoded) {      
       if (err) {
-        return res.json({ success: false, message: 'Failed to authenticate token.' });    
+        return res.status(403).send({ success: false, message: 'Failed to authenticate token.' });    
       } else {
         // if everything is good, save to request for use in other routes
         req.decoded = decoded;    
@@ -96,6 +96,12 @@ apiRoutes.post('/', function(req, res) {
 
 apiRoutes.post('/account', function(req, res) {
  db.users.findOne({email : "adam.r.windsor@gmail.com"}, function(err, user){
+  var user = {
+						first_name: user.first_name,
+						last_name: user.last_name,
+						id: user.id
+
+					}
   res.json(user);
 });
 }); 
