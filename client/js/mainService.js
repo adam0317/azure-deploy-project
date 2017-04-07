@@ -14,7 +14,7 @@
 		this.getProducts = function () {
 			var deferred = $q.defer();
 			$http.get(host + '/api/product').then(function (response) {
-				console.log(response.data);
+				//console.log(response.data);
 				deferred.resolve(response.data);
 			})
 			return deferred.promise;

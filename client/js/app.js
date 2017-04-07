@@ -17,7 +17,8 @@
 		})
 		.state('account', {
 			url: "/account",
-			templateUrl: "views/account.html"
+			templateUrl: "views/account.html",
+			controller: 'accountCtrl'
 		})
 		.state('checkout', {
 			url: "/checkout",
@@ -34,8 +35,7 @@
 		.state('register', {
 			url: "/register",
 			templateUrl: "views/register.html"
-		})
-		;
+		});
 		
 		
 		

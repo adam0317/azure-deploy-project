@@ -1,5 +1,5 @@
 (function () {
-	angular.module('app').controller('mainController', function ($scope, mainService, cartService, userService) {
+	angular.module('app').controller('mainController', function ($scope, mainService, cartService, userService, $location) {
 		
 		
 		function getCart() {
@@ -21,6 +21,7 @@
 			console.log('this fired');
 			userService.login(user).then(function (response) {
 				console.log(response);
+				
 			})
 		}
 
@@ -41,11 +42,7 @@
 		
 			$scope.totalPrice = cartService.getTotalPrice();
 			
-		// if ($scope.cart) {
-		// 	$scope.checkout();
-			
-		// }
-		//
+		
 
 		$scope.addToCart = function ($index) {
 			var item = $scope.products[$index];

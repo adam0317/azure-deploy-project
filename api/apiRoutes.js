@@ -30,13 +30,13 @@ apiRoutes.post('/login', function(req, res) {
     if (err) throw err;
 
     if (!user) {
-      res.json({ success: false, message: 'Authentication failed. User not found.' });
+      res.status(403).send({ success: false, message: 'Authentication failed. User not found.' });
     } else if (user) {
 
       // check if password matches
       if(!passwordService.validPassword(req.body.password, user.password)){
-        res.json({ success: false, message: 'Authentication failed. Wrong password.' });
-        console.log('True');
+       res.status(403).send({ success: false, message: 'Authentication failed. Wrong Password.' });
+        
       }
       else {
 
@@ -90,11 +90,16 @@ apiRoutes.use(function(req, res, next) {
   }
 });
 
-apiRoutes.get('/', function(req, res) {
+apiRoutes.post('/', function(req, res) {
   res.json({ message: 'Welcome to the coolest API on earth!' });
 });
 
-apiRoutes.get('/users', function(req, res) {
+apiRoutes.post('/account', function(req, res) {
+ db.users.findOne({email : "adam.r.windsor@gmail.com"}, function(err, user){
+  res.json(user);
+});
+}); 
+apiRoutes.post('/users', function(req, res) {
   db.users.find({}, function(err, users) {
     res.json(users);
   });
