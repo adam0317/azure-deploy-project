@@ -8,6 +8,8 @@ var bcrypt = require('bcrypt');
 var passwordService = require('./passwordService');
 //Create a new user
 apiRoutes.post('/newuser', dbController.newUser);
+apiRoutes.post('/createOrder', dbController.createOrder);
+apiRoutes.post('/createOrderItem', dbController.createOrderItem);
 
 //Products
 
@@ -18,10 +20,7 @@ apiRoutes.get('/product', dbController.getProducts);
 
 
 apiRoutes.post('/login', function (req, res) {
-  console.log(req.body.email);
-  console.log(req.body.password);
-  //var password = passwordService.validPassword(req.body.password);
-  //console.log(password);
+ 
   // find the user
   db.users.findOne({
     email: req.body.email

@@ -54,7 +54,10 @@
 		}
 
 		$scope.placeOrder = function () {
-			localStorage.removeItem('allEntries');
+			cartService.checkOut().then(function (response) {
+				console.log(response);
+			});
+			
 			getCart();
 			$scope.totalPrice = cartService.getTotalPrice();
 		}

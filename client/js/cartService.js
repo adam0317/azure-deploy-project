@@ -1,5 +1,5 @@
 (function () {
-	angular.module('app').service('cartService', function ($http, $q) {
+	angular.module('app').service('cartService', function ($http, $q, userService) {
 
 
 		this.addToCart = function (item) {
@@ -57,6 +57,39 @@
 			else {
 				return [];
 			}
+		}
+
+		this.checkOut = function () {
+			var defer = $q.defer();
+			userService.checkToken().then(function (response) {
+				if (response.status != 200) {
+					defer.reject(response);
+				} else {
+					
+					var user = {};
+					user.cust_id = response.data.id;
+				
+					return user;
+				}
+
+
+			}).then(function (user) {
+				$http.post('/api/createOrder', JSON.stringify(user)).then(function (response) {
+					//console.log(response);
+					var orderId = {};
+					orderId.orders_id = response.data.id;
+					orderId.products_id = [2,3,4,5];
+					return orderId;
+				}).then(function (orderId) {
+					//todo Make a loop to add multiple products to the same order
+					$http.post('/api/createOrderItem', orderId).then(function (response) {
+						console.log(response);
+					})
+				//console.log(orderId);
+			})
+				
+			})
+			return defer.promise;
 		}
 
 		this.cartServiceTest = function () {

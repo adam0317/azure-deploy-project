@@ -14,7 +14,7 @@ exports.newUser = function (req, res) {
 
 
   user.password = passwordService.hashPassword(user.password);
- 
+
 
   db.users.save(user, function (err, result) {
     console.log(result);
@@ -32,6 +32,21 @@ exports.getProducts = function (req, res) {
     }
     res.send(products);
   })
+}
+
+exports.createOrder = function (req, res) {
+  console.log(req.body);
+  db.orders.save(req.body, function (err, result) {
+
+    res.send(result);
+  });
+}
+exports.createOrderItem = function (req, res) {
+
+  db.order_items.save(req.body, function (err, result) {
+    console.log(result);
+    res.send(result);
+  });
 }
 
 

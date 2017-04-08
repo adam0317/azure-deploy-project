@@ -43,7 +43,7 @@
 			$http.post(host + '/api/account', token).then(function (response) {
 				if (response.status != 200) {
 					console.log(response.status);
-					defer.resolve(response);
+					defer.reject(response);
 				}
 				else {
 					
