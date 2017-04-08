@@ -19,6 +19,7 @@
 			url: "/account",
 			templateUrl: "views/account.html",
 			controller: 'accountCtrl'
+			
 		})
 		.state('checkout', {
 			url: "/checkout",

@@ -21,6 +21,7 @@
 			console.log('this fired');
 			userService.login(user).then(function (response) {
 				console.log(response);
+				$location.path('/account');
 				
 			})
 		}

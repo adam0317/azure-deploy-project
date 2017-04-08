@@ -25,8 +25,8 @@
 				}else{
 				localStorage.setItem('token', JSON.stringify(response.data.token));
 				console.log(response.data.token);
-				$location.path('/account');
-				deferred.resolve(response.data.status);
+				
+				deferred.resolve(response);
 				}
 			})
 			return deferred.promise;
@@ -36,8 +36,8 @@
 			var defer = $q.defer();
 			
 			var token = {
-				//"token": "taco"
-				"token": localStorage.getItem('token')
+				
+				"token": JSON.parse(localStorage.getItem('token'))
 			}
 			//console.log(token);
 			$http.post(host + '/api/account', token).then(function (response) {
@@ -46,7 +46,7 @@
 					defer.resolve(response);
 				}
 				else {
-					console.log(response);
+					
 					
 					defer.resolve(response);
 				}

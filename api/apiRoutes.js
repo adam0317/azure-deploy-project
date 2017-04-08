@@ -2,7 +2,7 @@ var express = require('express');
 var app = require('../server.js');
 var apiRoutes = express.Router();
 var db = app.get('db');
-var jwt    = require('jsonwebtoken');
+var jwt = require('jsonwebtoken');
 var dbController = require('./dbController.js');
 var bcrypt = require('bcrypt');
 var passwordService = require('./passwordService');
@@ -17,15 +17,15 @@ apiRoutes.get('/product', dbController.getProducts);
 // apiRoutes.delete('product/:id', dbController.deleteProductbyId);
 
 
-apiRoutes.post('/login', function(req, res) {
-	console.log(req.body.email);
-	console.log(req.body.password);
-//var password = passwordService.validPassword(req.body.password);
+apiRoutes.post('/login', function (req, res) {
+  console.log(req.body.email);
+  console.log(req.body.password);
+  //var password = passwordService.validPassword(req.body.password);
   //console.log(password);
   // find the user
   db.users.findOne({
     email: req.body.email
-  }, function(err, user) {
+  }, function (err, user) {
 
     if (err) throw err;
 
@@ -34,9 +34,9 @@ apiRoutes.post('/login', function(req, res) {
     } else if (user) {
 
       // check if password matches
-      if(!passwordService.validPassword(req.body.password, user.password)){
-       res.status(403).send({ success: false, message: 'Authentication failed. Wrong Password.' });
-        
+      if (!passwordService.validPassword(req.body.password, user.password)) {
+        res.status(403).send({ success: false, message: 'Authentication failed. Wrong Password.' });
+
       }
       else {
 
@@ -52,14 +52,14 @@ apiRoutes.post('/login', function(req, res) {
           message: 'Enjoy your token!',
           token: token
         });
-      }   
+      }
 
     }
 
   });
 });
 
-apiRoutes.use(function(req, res, next) {
+apiRoutes.use(function (req, res, next) {
 
   // check header or url parameters or post parameters for token
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
@@ -68,12 +68,13 @@ apiRoutes.use(function(req, res, next) {
   if (token) {
 
     // verifies secret and checks exp
-    jwt.verify(token, app.get('superSecret'), function(err, decoded) {      
+    jwt.verify(token, app.get('superSecret'), function (err, decoded) {
       if (err) {
-        return res.status(403).send({ success: false, message: 'Failed to authenticate token.' });    
+        return res.status(403).send({ success: false, message: 'Failed to authenticate token.' });
       } else {
         // if everything is good, save to request for use in other routes
-        req.decoded = decoded;    
+        req.decoded = decoded;
+       
         next();
       }
     });
@@ -82,33 +83,33 @@ apiRoutes.use(function(req, res, next) {
 
     // if there is no token
     // return an error
-    return res.status(403).send({ 
-        success: false, 
-        message: 'No token provided.' 
+    return res.status(403).send({
+      success: false,
+      message: 'No token provided.'
     });
-    
+
   }
 });
 
-apiRoutes.post('/', function(req, res) {
+apiRoutes.post('/', function (req, res) {
   res.json({ message: 'Welcome to the coolest API on earth!' });
 });
 
-apiRoutes.post('/account', function(req, res) {
- db.users.findOne({email : "adam.r.windsor@gmail.com"}, function(err, user){
-  var user = {
-						first_name: user.first_name,
-						last_name: user.last_name,
-						id: user.id
-
-					}
-  res.json(user);
+apiRoutes.post('/account', function (req, res) {
+  db.users.findOne({ email: req.decoded.email}, function (err, user) {
+    var user = {
+      first_name: user.first_name,
+      last_name: user.last_name,
+      id: user.id
+    }
+    res.json(user);
+  });
 });
-}); 
-apiRoutes.post('/users', function(req, res) {
-  db.users.find({}, function(err, users) {
+
+apiRoutes.post('/users', function (req, res) {
+  db.users.find({}, function (err, users) {
     res.json(users);
   });
-}); 
+});
 
 module.exports = apiRoutes;
