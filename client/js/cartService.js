@@ -61,14 +61,15 @@
 
 		this.checkOut = function () {
 			var defer = $q.defer();
+			var finalOrder = [];
 			userService.checkToken().then(function (response) {
 				if (response.status != 200) {
 					defer.reject(response);
 				} else {
-					
+
 					var user = {};
 					user.cust_id = response.data.id;
-				
+
 					return user;
 				}
 
@@ -78,16 +79,27 @@
 					//console.log(response);
 					var orderId = {};
 					orderId.orders_id = response.data.id;
-					orderId.products_id = [2,3,4,5];
+					orderId.products_arr = [2, 3, 4, 2];
+					console.log(orderId);
 					return orderId;
 				}).then(function (orderId) {
-					//todo Make a loop to add multiple products to the same order
-					$http.post('/api/createOrderItem', orderId).then(function (response) {
-						console.log(response);
+					orderId.products_arr.forEach(function (item) {
+						var order = {
+							orders_id: orderId.orders_id,
+							products_id: item
+						}
+
+						$http.post('/api/createOrderItem', order).then(function (response) {
+							return response;
+						}).then(function (response) {
+							finalOrder.push(response);
+						})
 					})
-				//console.log(orderId);
-			})
+
 				
+				})
+				defer.resolve(finalOrder);
+
 			})
 			return defer.promise;
 		}
