@@ -35,18 +35,34 @@ exports.getProducts = function (req, res) {
 }
 
 exports.createOrder = function (req, res) {
-  console.log(req.body);
-  db.orders.save(req.body, function (err, result) {
+  var newArr = [];
 
-    res.send(result);
-  });
-}
-exports.createOrderItem = function (req, res) {
+  db.orders.save({ cust_id: req.body.cust_id }, function (err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      req.body.products.map(function (e) {
+        var newObj = {
+          orders_id: result.id,
+          products_id: e
+        }
+        newArr.push(newObj);
+        return e;
+      })
+    }
+   
+    db.order_items.insert(newArr, function (err, result) {
+      if (err) {
+        res.send(err);
+      }else{
+      res.send(result);
 
-  db.order_items.save(req.body, function (err, result) {
-    console.log(result);
-    res.send(result);
+      }
+    });
+    
   });
+
 }
+
 
 

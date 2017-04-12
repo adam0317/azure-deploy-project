@@ -9,7 +9,7 @@ var passwordService = require('./passwordService');
 //Create a new user
 apiRoutes.post('/newuser', dbController.newUser);
 apiRoutes.post('/createOrder', dbController.createOrder);
-apiRoutes.post('/createOrderItem', dbController.createOrderItem);
+
 
 //Products
 

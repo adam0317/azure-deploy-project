@@ -1,6 +1,7 @@
 (function () {
 	angular.module('app').service('cartService', function ($http, $q, userService) {
 
+		var model = this;
 
 		this.addToCart = function (item) {
 			// Parse any JSON previously stored in allEntries
@@ -11,7 +12,7 @@
 			// Save allEntries back to local storage
 			existingEntries.push(item);
 			localStorage.setItem("allEntries", JSON.stringify(existingEntries));
-			console.log(existingEntries);
+			//console.log(existingEntries);
 			return existingEntries;
 		};
 
@@ -59,46 +60,33 @@
 			}
 		}
 
-		this.checkOut = function () {
+		this.checkOut = function (cart) {
 			var defer = $q.defer();
-			var finalOrder = [];
+			
 			userService.checkToken().then(function (response) {
 				if (response.status != 200) {
 					defer.reject(response);
 				} else {
 
-					var user = {};
-					user.cust_id = response.data.id;
 
+					var products = cart.map(function (e) {
+
+						return e.id;
+					})
+					var user = {
+						cust_id: response.data.id,
+						products: products
+					};
+					console.log("user.products", user);
 					return user;
 				}
 
 
 			}).then(function (user) {
-				$http.post('/api/createOrder', JSON.stringify(user)).then(function (response) {
-					//console.log(response);
-					var orderId = {};
-					orderId.orders_id = response.data.id;
-					orderId.products_arr = [2, 3, 4, 2];
-					console.log(orderId);
-					return orderId;
-				}).then(function (orderId) {
-					orderId.products_arr.forEach(function (item) {
-						var order = {
-							orders_id: orderId.orders_id,
-							products_id: item
-						}
-
-						$http.post('/api/createOrderItem', order).then(function (response) {
-							return response;
-						}).then(function (response) {
-							finalOrder.push(response);
-						})
-					})
-
-				
+				$http.post('/api/createOrder', JSON.stringify(user)).then(function (response) {				
+					
+					defer.resolve(response);
 				})
-				defer.resolve(finalOrder);
 
 			})
 			return defer.promise;
