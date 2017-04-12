@@ -18,6 +18,10 @@
 
 		this.removeFromCart = function (item) {
 			//console.log('removeFromCart Fired');
+			if (arguments.length < 1) {
+				localStorage.removeItem("allEntries");
+				return;
+			}
 			var existingEntries = JSON.parse(localStorage.getItem("allEntries"));
 			if (existingEntries == null) {
 				return;
