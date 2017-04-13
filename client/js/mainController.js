@@ -55,13 +55,12 @@
 
 		$scope.placeOrder = function () {
 			cartService.checkOut($scope.cart).then(function (response) {
-				console.log(response);
-				$scope.order = response;
+				
 				$scope.currentOrder = $scope.cart;
 				cartService.removeFromCart();
 				getCart();
 				$scope.totalPrice = cartService.getTotalPrice();
-				$location.path('/account');
+				$location.path('/order');
 				console.log("scope.currentOrder", $scope.currentOrder);
 
 			});

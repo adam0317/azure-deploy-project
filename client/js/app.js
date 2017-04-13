@@ -36,7 +36,11 @@
 		.state('register', {
 			url: "/register",
 			templateUrl: "views/register.html"
-		});
+		})
+		.state('order', {
+			url: "/order",
+			templateUrl: "views/order.html"
+		}); 
 		
 		
 		
