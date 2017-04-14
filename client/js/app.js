@@ -6,46 +6,41 @@
 		Object.assign(env, window.__env);
 	}
 	var app = angular.module('app', ['ui.router']).config(function ($stateProvider, $urlRouterProvider) {
-		
+
 		$stateProvider.state('home', {
 			url: "/",
-			templateUrl: "views/home.html"
+			template: '<product-grid products="products" add-to-cart="addToCart"></product-grid>'
 		})
-		.state('cart', {
-			url: "/cart",
-			templateUrl: "views/cart.html"
-		})
-		.state('account', {
-			url: "/account",
-			templateUrl: "views/account.html",
-			controller: 'accountCtrl'
-			
-		})
-		.state('checkout', {
-			url: "/checkout",
-			templateUrl: "views/checkout.html"
-		})
-		.state('product', {
-			url: "/product",
-			templateUrl: "views/product.html"
-		})
-		.state('login', {
-			url: "/login",
-			templateUrl: "views/login.html"
-		})
-		.state('register', {
-			url: "/register",
-			templateUrl: "views/register.html"
-		})
-		.state('order', {
-			url: "/order",
-			templateUrl: "views/order.html"
-		}); 
-		
-		
-		
-		
-		
+			.state('cart', {
+				url: "/cart",
+				template: '<cart remove-from-cart="removeFromCart" total-price="totalPrice" cart="cart"></cart>'
+			})
+			.state('account', {
+				url: "/account",
+				template: '<account></account>'
+
+			})
+			.state('checkout', {
+				url: "/checkout",
+				template: '<checkout remove-from-cart="removeFromCart" total-price="totalPrice" cart="cart"></checkout>'
+			})
+			.state('login', {
+				url: "/login",
+				template: '<login-page></login-page>'
+			})
+			.state('register', {
+				url: "/register",
+				template: '<register></register>'
+			})
+			.state('order', {
+				url: "/order",
+				template: '<order current-order="currentOrder"></order>'
+			});
+
+
+
+
+
 		$urlRouterProvider.otherwise("/");
 
 

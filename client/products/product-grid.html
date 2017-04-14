@@ -1,0 +1,18 @@
+<div class="container">
+	<div class="col-xs-12">
+		<img src="https://cdn.shopify.com/s/files/1/0543/1637/files/slide_1_1024x_1024x.jpg?v=1484839477" alt="camera" class="img-responsive">
+	</div>
+
+	<div>
+		
+	</div>
+
+	<div ng-repeat="product in model.products track by $index" class="col-lg-4 product-image">
+		<h2 class="text-center">{{product.name}} </h2>
+		<img ng-src="{{product.image_url}}" alt="" class="img-responsive">
+		<div class="text-center">
+			{{product.sell_price | currency}} <br><br>
+			<button type="button" class="btn btn-lg btn-primary" ng-click="model.addToCart(product)">Add To Cart</button>
+		</div>
+	</div>
+</div>
