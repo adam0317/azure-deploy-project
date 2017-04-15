@@ -4,14 +4,14 @@
 		templateUrl: 'order/order.html',
 		controller: orderController,
 		controllerAs: 'model',
-		bindings: {	
-			
-			currentOrder: '='
-		}
+
 	})
 	function orderController(cartService) {
 		var model = this;
-		
-		
+		model.currentOrder = JSON.parse(localStorage.getItem("allEntries"));
+
+		cartService.removeFromCart();
+
+
 	}
 })();

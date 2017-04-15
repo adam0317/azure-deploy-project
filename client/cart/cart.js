@@ -4,15 +4,17 @@
 		templateUrl: 'cart/cart.html',
 		controller: Controller,
 		controllerAs: 'model',
-		bindings: {
-			totalPrice: '=',
-			removeFromCart: '=',
-			cart: '='
-		}
+		
 	})
 
 	function Controller(cartService) {
 		var model = this;
-		
+		model.cart = cartService.getCart();
+		model.totalPrice = cartService.getTotalPrice();
+		model.removeFromCart = function (item) {
+			cartService.removeFromCart(item);
+			model.cart = cartService.getCart();
+			model.totalPrice = cartService.getTotalPrice();
+		}
 	}
 })();

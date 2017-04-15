@@ -8,17 +8,17 @@
 			// Parse any JSON previously stored in allEntries
 			var existingEntries = JSON.parse(localStorage.getItem("allEntries"));
 			if (existingEntries == null) existingEntries = [];
-
 			localStorage.setItem("item", JSON.stringify(item));
+
 			// Save allEntries back to local storage
 			existingEntries.push(item);
 			localStorage.setItem("allEntries", JSON.stringify(existingEntries));
-			//console.log(existingEntries);
+
 			return existingEntries;
 		};
 
 		this.removeFromCart = function (item) {
-			
+
 			if (arguments[0] == null) {
 				localStorage.removeItem("allEntries");
 				return;
@@ -32,7 +32,7 @@
 						console.log('match');
 						existingEntries.splice(i, 1);
 						localStorage.setItem("allEntries", JSON.stringify(existingEntries));
-
+						return existingEntries;
 					}
 				}
 			}

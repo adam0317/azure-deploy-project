@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 16);
+/******/ 	return __webpack_require__(__webpack_require__.s = 15);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -106,7 +106,7 @@
 	'use strict';
 
 	var env = {};
-	var angular = __webpack_require__(15);
+	var angular = __webpack_require__(14);
 
 	if (window) {
 		Object.assign(env, window.__env);
@@ -275,16 +275,19 @@
 	angular.module('app').component('cart', {
 		templateUrl: 'cart/cart.html',
 		controller: Controller,
-		controllerAs: 'model',
-		bindings: {
-			totalPrice: '=',
-			removeFromCart: '=',
-			cart: '='
-		}
+		controllerAs: 'model'
+
 	});
 
 	function Controller(cartService) {
 		var model = this;
+		model.cart = cartService.getCart();
+		model.totalPrice = cartService.getTotalPrice();
+		model.removeFromCart = function (item) {
+			cartService.removeFromCart(item);
+			model.cart = cartService.getCart();
+			model.totalPrice = cartService.getTotalPrice();
+		};
 	}
 })();
 
@@ -306,12 +309,12 @@
 			// Parse any JSON previously stored in allEntries
 			var existingEntries = JSON.parse(localStorage.getItem("allEntries"));
 			if (existingEntries == null) existingEntries = [];
-
 			localStorage.setItem("item", JSON.stringify(item));
+
 			// Save allEntries back to local storage
 			existingEntries.push(item);
 			localStorage.setItem("allEntries", JSON.stringify(existingEntries));
-			//console.log(existingEntries);
+
 			return existingEntries;
 		};
 
@@ -330,6 +333,7 @@
 						console.log('match');
 						existingEntries.splice(i, 1);
 						localStorage.setItem("allEntries", JSON.stringify(existingEntries));
+						return existingEntries;
 					}
 				}
 			}
@@ -406,19 +410,21 @@
 	angular.module('app').component('checkout', {
 		templateUrl: 'checkout/checkout.html',
 		controller: Controller,
-		controllerAs: 'model',
-		bindings: {
-			cart: '=',
-			totalPrice: '=',
-			removeFromCart: '='
-		}
+		controllerAs: 'model'
+
 	});
 
 	function Controller(cartService, $location) {
 		var model = this;
+		model.cart = cartService.getCart();
+		model.totalPrice = cartService.getTotalPrice();
+		model.removeFromCart = function (item) {
+			cartService.removeFromCart(item);
+			model.cart = cartService.getCart();
+			model.totalPrice = cartService.getTotalPrice();
+		};
 		model.placeOrder = function () {
 			cartService.checkOut(model.cart).then(function (response) {
-				model.removeFromCart();
 				$location.path('/order');
 			});
 		};
@@ -427,44 +433,6 @@
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-(function () {
-	'use strict';
-
-	angular.module('app').controller('mainController', function ($scope, productService, cartService, userService, $location) {
-		function getCart() {
-			$scope.cart = cartService.getCart();
-		}
-		getCart();
-		function getProducts() {
-			productService.getProducts().then(function (response) {
-				$scope.products = response;
-			});
-		}
-		$scope.removeFromCart = function (item) {
-			$scope.currentOrder = $scope.cart;
-			cartService.removeFromCart(item);
-			getCart();
-			$scope.totalPrice = cartService.getTotalPrice();
-		};
-		$scope.totalPrice = cartService.getTotalPrice();
-		$scope.addToCart = function (product) {
-
-			cartService.addToCart(product);
-			getCart();
-			$scope.totalPrice = cartService.getTotalPrice();
-		};
-		//$scope.currentOrder={};
-		getProducts();
-	});
-})();
-
-/***/ }),
-/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -486,7 +454,7 @@
 })();
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -498,19 +466,19 @@
 	angular.module('app').component('order', {
 		templateUrl: 'order/order.html',
 		controller: orderController,
-		controllerAs: 'model',
-		bindings: {
+		controllerAs: 'model'
 
-			currentOrder: '='
-		}
 	});
 	function orderController(cartService) {
 		var model = this;
+		model.currentOrder = JSON.parse(localStorage.getItem("allEntries"));
+
+		cartService.removeFromCart();
 	}
 })();
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -523,20 +491,26 @@
 
 		templateUrl: 'products/product-grid.html',
 		controller: productGridController,
-		controllerAs: 'model',
-		bindings: {
-			addToCart: '<',
-			products: '<'
-		}
+		controllerAs: 'model'
+
 	});
 
-	function productGridController(productService) {
+	function productGridController(productService, cartService) {
 		var model = this;
+		model.addToCart = function (product) {
+			cartService.addToCart(product);
+		};
+		function getProducts() {
+			productService.getProducts().then(function (response) {
+				model.products = response;
+			});
+		}
+		getProducts();
 	}
 })();
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -558,16 +532,16 @@
 })();
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(19);
+var content = __webpack_require__(18);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(23)(content, {});
+var update = __webpack_require__(22)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -584,7 +558,7 @@ if(false) {
 }
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports) {
 
 /**
@@ -33934,37 +33908,36 @@ $provide.value("$locale", {
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(14);
+__webpack_require__(13);
 module.exports = angular;
 
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 __webpack_require__(1);
-__webpack_require__(8);
 __webpack_require__(4);
 __webpack_require__(0);
 __webpack_require__(5);
 __webpack_require__(6);
 __webpack_require__(7);
 __webpack_require__(2);
+__webpack_require__(9);
 __webpack_require__(10);
 __webpack_require__(11);
-__webpack_require__(12);
 __webpack_require__(3);
-__webpack_require__(13);
-__webpack_require__(9);
+__webpack_require__(12);
+__webpack_require__(8);
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34085,7 +34058,7 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34099,9 +34072,9 @@ function fromByteArray (uint8) {
 
 
 
-var base64 = __webpack_require__(17)
-var ieee754 = __webpack_require__(21)
-var isArray = __webpack_require__(22)
+var base64 = __webpack_require__(16)
+var ieee754 = __webpack_require__(20)
+var isArray = __webpack_require__(21)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -35879,13 +35852,13 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(25)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(24)))
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(20)(undefined);
+exports = module.exports = __webpack_require__(19)(undefined);
 // imports
 
 
@@ -35896,7 +35869,7 @@ exports.push([module.i, "body {\n  font: 14px \"Lucida Grande\", Helvetica, Aria
 
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {/*
@@ -35975,10 +35948,10 @@ function toComment(sourceMap) {
   return '/*# ' + data + ' */';
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17).Buffer))
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -36068,7 +36041,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -36079,7 +36052,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -36116,7 +36089,7 @@ var stylesInDom = {},
 	singletonElement = null,
 	singletonCounter = 0,
 	styleElementsInsertedAtTop = [],
-	fixUrls = __webpack_require__(24);
+	fixUrls = __webpack_require__(23);
 
 module.exports = function(list, options) {
 	if(typeof DEBUG !== "undefined" && DEBUG) {
@@ -36375,7 +36348,7 @@ function updateLink(linkElement, options, obj) {
 
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, exports) {
 
 
@@ -36470,7 +36443,7 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports) {
 
 var g;

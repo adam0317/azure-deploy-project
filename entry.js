@@ -1,5 +1,4 @@
 require('./client/app.js');
-require('./client/mainController.js');
 require('./client/auth/userService.js');
 require('./client/account/account.js');
 require('./client/cart/cart.js');
