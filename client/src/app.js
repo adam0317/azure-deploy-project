@@ -13,7 +13,7 @@
 		})
 			.state('cart', {
 				url: "/cart",
-				template: '<cart remove-from-cart="removeFromCart" total-price="totalPrice" cart="cart"></cart>'
+				template: '<cart  remove-from-cart="removeFromCart" total-price="totalPrice" cart="cart" current-order="currentOrder"></cart>'
 			})
 			.state('account', {
 				url: "/account",
@@ -34,7 +34,7 @@
 			})
 			.state('order', {
 				url: "/order",
-				template: '<order current-order="currentOrder"></order>'
+				template: '<order current-order="currentOrder" ></order>'
 			});
 
 

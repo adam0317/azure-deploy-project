@@ -1,14 +1,17 @@
-(function(){
-'use strict';
-angular.module('app').component('order', {
+(function () {
+	'use strict';
+	angular.module('app').component('order', {
 		templateUrl: 'order/order.html',
 		controller: orderController,
 		controllerAs: 'model',
-		bindings: {
-			currentOrder: '<'
+		bindings: {	
+			
+			currentOrder: '='
 		}
-})
-		function orderController() {
-			var model = this;
-		}
+	})
+	function orderController(cartService) {
+		var model = this;
+		
+		
+	}
 })();

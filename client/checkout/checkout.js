@@ -5,9 +5,10 @@
 		controller: Controller,
 		controllerAs: 'model',
 		bindings: {
+			cart: '=',
 			totalPrice: '=',
-			removeFromCart: '=',
-			cart: '='
+			removeFromCart: '='
+			
 		}
 	});
 
@@ -15,14 +16,9 @@
 		var model = this;
 		model.placeOrder = function () {
 			cartService.checkOut(model.cart).then(function (response) {
-
-				model.currentOrder = model.cart;
-				cartService.removeFromCart();
-				cartService.getCart();
-				model.totalPrice = cartService.getTotalPrice();
+				
+				model.removeFromCart();
 				$location.path('/order');
-				console.log("model.currentOrder", model.currentOrder);
-
 			});
 
 		}

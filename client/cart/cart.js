@@ -1,17 +1,18 @@
-(function(){
-'use strict';
-angular.module('app').component('cart', {
-	templateUrl: 'cart/cart.html',
-	controller: Controller,
-	controllerAs: 'model',
-	bindings: {
-		totalPrice: '=',
-		removeFromCart: '=',
-		cart: '='
-	}
-})
+(function () {
+	'use strict';
+	angular.module('app').component('cart', {
+		templateUrl: 'cart/cart.html',
+		controller: Controller,
+		controllerAs: 'model',
+		bindings: {
+			totalPrice: '=',
+			removeFromCart: '=',
+			cart: '='
+		}
+	})
 
-function Controller() {
-	
-}
+	function Controller(cartService) {
+		var model = this;
+		
+	}
 })();

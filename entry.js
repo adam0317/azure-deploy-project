@@ -1,1 +1,13 @@
-require('./client/js/accountCtrl.js');
+require('./client/src/app.js');
+require('./client/src/mainController.js');
+require('./client/src/userService.js');
+require('./client/account/account.js');
+require('./client/cart/cart.js');
+require('./client/cart/cartService.js');
+require('./client/checkout/checkout.js');
+require('./client/login/login-page.js');
+require('./client/order/order.js');
+require('./client/products/product-grid.js');
+require('./client/products/productService.js');
+require('./client/register/register.js');
+require('./client/css/style.css');

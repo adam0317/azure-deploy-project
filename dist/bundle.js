@@ -63,39 +63,14 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
-
-(function () {
-angular.module('app').controller('accountCtrl', function ($scope, mainService, cartService, userService, $location, accountService) {
-
-function checkToken() {
-	userService.checkToken().then(function (response) {
-		console.log(response);
-		$scope.account = response.data;
-		
-	})
-}
-
-
-
-checkToken();
-
-
-});
-	
-})();
-
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(0);
+__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./client/js/accountCtrl.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 /***/ })
 /******/ ]);
