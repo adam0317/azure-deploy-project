@@ -1,8 +1,8 @@
 (function () {
+	'use strict';
 	angular.module('app').service('userService', function ($http, $q, $location) {
 
 		var host = new window.URL($location.absUrl()).origin;
-
 		this.register = function (user) {
 
 			var defer = $q.defer();
@@ -46,16 +46,10 @@
 					defer.reject(response);
 				}
 				else {
-
-
 					defer.resolve(response);
 				}
 			})
 			return defer.promise;
 		}
-
-
-
 	});
-
 })();

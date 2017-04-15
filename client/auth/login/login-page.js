@@ -3,7 +3,7 @@
 
 	angular.module('app').component('loginPage', {
 
-		templateUrl: 'login/login-page.html',
+		templateUrl: 'auth/login/login-page.html',
 		controller: loginController,
 		controllerAs: 'model',
 		

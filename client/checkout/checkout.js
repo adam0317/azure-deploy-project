@@ -7,16 +7,14 @@
 		bindings: {
 			cart: '=',
 			totalPrice: '=',
-			removeFromCart: '='
-			
+			removeFromCart: '='			
 		}
 	});
 
 	function Controller(cartService, $location) {
 		var model = this;
 		model.placeOrder = function () {
-			cartService.checkOut(model.cart).then(function (response) {
-				
+			cartService.checkOut(model.cart).then(function (response) {			
 				model.removeFromCart();
 				$location.path('/order');
 			});

@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular.module('app').component('register', {
-		templateUrl: 'register/register.html',
+		templateUrl: 'auth/register/register.html',
 		controller: registerController,
 		controllerAs: 'model',
 	});

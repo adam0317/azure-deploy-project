@@ -1,6 +1,12 @@
-(function () {
 
+
+(function () {
+	'use strict';
+	
 	var env = {};
+	var angular = require('angular');
+	
+	
 
 	if (window) {
 		Object.assign(env, window.__env);

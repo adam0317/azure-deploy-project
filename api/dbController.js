@@ -17,7 +17,7 @@ exports.newUser = function (req, res) {
 
 
   db.users.save(user, function (err, result) {
-    console.log(result);
+   
     res.send(result);
   });
 
@@ -27,7 +27,6 @@ exports.getProducts = function (req, res) {
 
   db.products.find(function (err, products) {
     if (err) {
-      console.log('taco' + err);
       res.send(err);
     }
     res.send(products);

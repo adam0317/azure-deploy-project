@@ -1,4 +1,5 @@
 (function () {
+	'use strict';
 	angular.module('app').service('cartService', function ($http, $q, userService) {
 
 		var model = this;

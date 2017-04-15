@@ -1,4 +1,5 @@
 (function () {
+	'use strict';
 	angular.module('app').controller('mainController', function ($scope, productService, cartService, userService, $location) {
 		function getCart() {
 			$scope.cart = cartService.getCart();
