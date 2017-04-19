@@ -1,16 +1,31 @@
 <div class="container-fluid blue">
-
 	<div class="header clearfix">
-		<nav>
-			<ul class="nav nav-pills pull-right white">
-
-				<li role="presentation"><a ui-sref="home">Home</a></li>
-				<li role="presentation"><a ui-sref="login">Login</a></li>
-				<li role="presentation"><a ui-sref="register">Register</a></li>
-				<li role="presentation"><a ui-sref="cart">Cart</a></li>
-				<li role="presentation"><a ui-sref="checkout">Checkout</a></li>
-
-			</ul>
-		</nav>
+		<div class="header-bottom">
+			<div class="row">
+				<div class="col-md-3"></div>
+				<div class="col-md-6">
+					<nav>
+						<ul class="nav nav-pills  white">
+							<li role="presentation"><a ui-sref="home">Home</a></li>
+							<li role="presentation"><a ui-sref="login">Login</a></li>
+							<li role="presentation"><a ui-sref="register">Register</a></li>
+							<li role="presentation"><a ui-sref="cart">Cart</a></li>
+							<li role="presentation"><a ui-sref="checkout">Checkout</a></li>
+							<form>
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="Search">
+									<div class="input-group-btn">
+										<button class="btn btn-lg" type="submit">
+       									 <i class="glyphicon glyphicon-search"></i>
+      								</button>
+									</div>
+								</div>
+							</form>
+						</ul>
+					</nav>
+				</div>
+				<div class="col-md-3"></div>
+			</div>
+		</div>
 	</div>
 </div>
