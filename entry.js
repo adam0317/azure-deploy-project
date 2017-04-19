@@ -11,3 +11,5 @@ require('./client/products/productService.js');
 require('./client/auth/register/register.js');
 require('./client/css/style.css');
 require('./client/navbar/navBar.js');
+require('./client/home/home.js');
+require('./client/footer/footer.js');

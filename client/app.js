@@ -15,7 +15,7 @@
 
 		$stateProvider.state('home', {
 			url: "/",
-			template: '<product-grid products="products" add-to-cart="addToCart"></product-grid>'
+			template: '<home></home>'
 		})
 			.state('cart', {
 				url: "/cart",

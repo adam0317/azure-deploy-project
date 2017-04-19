@@ -41,3 +41,23 @@ body {
   text-align: center;
 }
 
+.hero {
+  /*//background-image: url("../images/lens-nikon-glass-light-65661.jpeg")*/
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.footer {
+  background-color: #F2F2F2;
+  height: 200px;
+}
+
+.footerLinks .nav>li>a {
+  color: #000;
+}
+
+.product {
+  margin-bottom: 50px;
+}
+

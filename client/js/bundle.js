@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 17);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -106,7 +106,7 @@
 	'use strict';
 
 	var env = {};
-	var angular = __webpack_require__(14);
+	var angular = __webpack_require__(16);
 
 	if (window) {
 		Object.assign(env, window.__env);
@@ -115,7 +115,7 @@
 
 		$stateProvider.state('home', {
 			url: "/",
-			template: '<product-grid products="products" add-to-cart="addToCart"></product-grid>'
+			template: '<home></home>'
 		}).state('cart', {
 			url: "/cart",
 			template: '<cart  remove-from-cart="removeFromCart" total-price="totalPrice" cart="cart" current-order="currentOrder"></cart>'
@@ -441,6 +441,57 @@
 (function () {
 	'use strict';
 
+	angular.module('app').component('footer', {
+		templateUrl: 'footer/footer.html',
+		controller: Controller,
+		controllerAs: 'model'
+
+	});
+
+	function Controller() {
+		var model = this;
+	}
+})();
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+(function () {
+	'use strict';
+
+	angular.module('app').component('home', {
+		templateUrl: 'home/home.html',
+		controller: Controller,
+		controllerAs: 'model'
+
+	});
+
+	function Controller($location, cartService) {
+		var model = this;
+		model.cart = cartService.getCart();
+		model.totalPrice = cartService.getTotalPrice();
+		model.removeFromCart = function (item) {
+			cartService.removeFromCart(item);
+			model.cart = cartService.getCart();
+			model.totalPrice = cartService.getTotalPrice();
+		};
+	}
+})();
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+(function () {
+	'use strict';
+
 	angular.module('app').component('navBar', {
 		templateUrl: 'navbar/navbar.html',
 		controller: Controller,
@@ -454,7 +505,7 @@
 })();
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -478,7 +529,7 @@
 })();
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -510,7 +561,7 @@
 })();
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -532,16 +583,16 @@
 })();
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(18);
+var content = __webpack_require__(20);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(22)(content, {});
+var update = __webpack_require__(24)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -558,7 +609,7 @@ if(false) {
 }
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports) {
 
 /**
@@ -33908,15 +33959,15 @@ $provide.value("$locale", {
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(13);
+__webpack_require__(15);
 module.exports = angular;
 
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33929,15 +33980,17 @@ __webpack_require__(5);
 __webpack_require__(6);
 __webpack_require__(7);
 __webpack_require__(2);
-__webpack_require__(9);
-__webpack_require__(10);
 __webpack_require__(11);
-__webpack_require__(3);
 __webpack_require__(12);
+__webpack_require__(13);
+__webpack_require__(3);
+__webpack_require__(14);
+__webpack_require__(10);
+__webpack_require__(9);
 __webpack_require__(8);
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34058,7 +34111,7 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34072,9 +34125,9 @@ function fromByteArray (uint8) {
 
 
 
-var base64 = __webpack_require__(16)
-var ieee754 = __webpack_require__(20)
-var isArray = __webpack_require__(21)
+var base64 = __webpack_require__(18)
+var ieee754 = __webpack_require__(22)
+var isArray = __webpack_require__(23)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -35852,24 +35905,24 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(24)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(26)))
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(19)(undefined);
+exports = module.exports = __webpack_require__(21)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "body {\n  font: 14px \"Lucida Grande\", Helvetica, Arial, sans-serif;\n}\n\n.nav>li>a {\n  color: #fff;\n}\n.nav>li>a:hover {\n  color: #182E49;\n}\n\n.nav>li>a:focus {\n   color: #182E49;\n}\n\n\n.blue {\n  background-color: #182E49;\n  height: 100px;\n  width: 100%;\n}\n\n.header {\n  margin: 20px 0 0 0;\n}\n\n.main-image {\n  margin: 15px auto;\n  display: block;\n  width: 100%;\n}\n\n.img-responsive{\n  margin: 0 auto;\n} \n\n.monies {\n  font-size: 88px;\n  font-weight: 700;\n  color: firebrick;\n  text-align: center;\n}\n\n", ""]);
+exports.push([module.i, "body {\n  font: 14px \"Lucida Grande\", Helvetica, Arial, sans-serif;\n}\n\n.nav>li>a {\n  color: #fff;\n}\n.nav>li>a:hover {\n  color: #182E49;\n}\n\n.nav>li>a:focus {\n   color: #182E49;\n}\n\n\n.blue {\n  background-color: #182E49;\n  height: 100px;\n  width: 100%;\n}\n\n.header {\n  margin: 20px 0 0 0;\n}\n\n.main-image {\n  margin: 15px auto;\n  display: block;\n  width: 100%;\n}\n\n.img-responsive{\n  margin: 0 auto;\n} \n\n.monies {\n  font-size: 88px;\n  font-weight: 700;\n  color: firebrick;\n  text-align: center;\n}\n\n.hero {\n  /*//background-image: url(\"../images/lens-nikon-glass-light-65661.jpeg\")*/\n  width: 100%;\n  margin: 0;\n  padding: 0;\n}\n\n.footer {\n  background-color: #F2F2F2;\n  height: 200px;\n}\n\n.footerLinks .nav>li>a {\n  color: #000;\n}\n\n.product {\n  margin-bottom: 50px;\n}\n\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {/*
@@ -35948,10 +36001,10 @@ function toComment(sourceMap) {
   return '/*# ' + data + ' */';
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(19).Buffer))
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -36041,7 +36094,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -36052,7 +36105,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -36089,7 +36142,7 @@ var stylesInDom = {},
 	singletonElement = null,
 	singletonCounter = 0,
 	styleElementsInsertedAtTop = [],
-	fixUrls = __webpack_require__(23);
+	fixUrls = __webpack_require__(25);
 
 module.exports = function(list, options) {
 	if(typeof DEBUG !== "undefined" && DEBUG) {
@@ -36348,7 +36401,7 @@ function updateLink(linkElement, options, obj) {
 
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports) {
 
 
@@ -36443,7 +36496,7 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports) {
 
 var g;
