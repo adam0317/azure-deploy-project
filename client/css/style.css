@@ -44,7 +44,12 @@ body {
 
 .img-responsive{
   margin: 0 auto;
-} 
+}
+
+.home-banner {
+ 
+  max-height: 300px;
+}
 
 .monies {
   font-size: 88px;

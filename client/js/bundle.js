@@ -470,7 +470,7 @@
 
 	});
 
-	function Controller($location, cartService) {
+	function Controller($location, cartService, productService) {
 		var model = this;
 		model.cart = cartService.getCart();
 		model.totalPrice = cartService.getTotalPrice();
@@ -479,6 +479,19 @@
 			model.cart = cartService.getCart();
 			model.totalPrice = cartService.getTotalPrice();
 		};
+		model.addToCart = function (product) {
+			cartService.addToCart(product);
+		};
+
+		var getMainProduct = function getMainProduct() {
+
+			return productService.getProducts().then(function (response) {
+				model.products = response;
+				model.mainProduct = model.products[Math.floor(Math.random() * model.products.length)];
+				console.log(model.mainProduct);
+			});
+		};
+		getMainProduct();
 	}
 })();
 
@@ -35916,7 +35929,7 @@ exports = module.exports = __webpack_require__(21)(undefined);
 
 
 // module
-exports.push([module.i, "body {\n  font: 14px \"Lucida Grande\", Helvetica, Arial, sans-serif;\n}\n\n.nav>li>a {\n  color: #fff;\n}\n.nav>li>a:hover {\n  color: #182E49;\n}\n.nav-pills>li>a{\n  margin-right: 50px;\n}\n\n.nav>li>a:focus {\n   color: #182E49;\n}\n\n\n.blue {\n  background-color: #182E49;\n  \n  width: 100%;\n}\n\n.header {\n  margin: 20px 0 0 0;\n  \n}\n\n\n.header-bottom {\n top: 110%;\n bottom: 0;\n left: 0;\n right: 0;\n}\n\n.main-image {\n  margin: 15px auto;\n  display: block;\n  width: 100%;\n}\n\n.img-responsive{\n  margin: 0 auto;\n} \n\n.monies {\n  font-size: 88px;\n  font-weight: 700;\n  color: firebrick;\n  text-align: center;\n}\n\n.hero {\n  /*//background-image: url(\"../images/lens-nikon-glass-light-65661.jpeg\")*/\n  width: 100%;\n  margin: 0;\n  padding: 0;\n}\n\n.footer {\n  margin-top: 50px;\n  background-color: #F2F2F2;\n  height: 200px;\n}\n\n.footerLinks .nav>li>a {\n  color: #000;\n}\n\n.btn-lg {\n  padding: 7px 16px;\n}\n\n", ""]);
+exports.push([module.i, "body {\n  font: 14px \"Lucida Grande\", Helvetica, Arial, sans-serif;\n}\n\n.nav>li>a {\n  color: #fff;\n}\n.nav>li>a:hover {\n  color: #182E49;\n}\n.nav-pills>li>a{\n  margin-right: 50px;\n}\n\n.nav>li>a:focus {\n   color: #182E49;\n}\n\n\n.blue {\n  background-color: #182E49;\n  \n  width: 100%;\n}\n\n.header {\n  margin: 20px 0 0 0;\n  \n}\n\n\n.header-bottom {\n top: 110%;\n bottom: 0;\n left: 0;\n right: 0;\n}\n\n.main-image {\n  margin: 15px auto;\n  display: block;\n  width: 100%;\n}\n\n.img-responsive{\n  margin: 0 auto;\n}\n\n.home-banner {\n \n  max-height: 300px;\n}\n\n.monies {\n  font-size: 88px;\n  font-weight: 700;\n  color: firebrick;\n  text-align: center;\n}\n\n.hero {\n  /*//background-image: url(\"../images/lens-nikon-glass-light-65661.jpeg\")*/\n  width: 100%;\n  margin: 0;\n  padding: 0;\n}\n\n.footer {\n  margin-top: 50px;\n  background-color: #F2F2F2;\n  height: 200px;\n}\n\n.footerLinks .nav>li>a {\n  color: #000;\n}\n\n.btn-lg {\n  padding: 7px 16px;\n}\n\n", ""]);
 
 // exports
 

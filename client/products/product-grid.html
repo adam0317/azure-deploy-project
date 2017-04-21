@@ -1,5 +1,5 @@
-<div class="container product">
-	<div ng-repeat="product in model.products track by $index" class="col-lg-4 product-image">
+<div class="product">
+	<div ng-repeat="product in model.products track by $index" class="col-md-4 product-image">
 		<h2 class="text-center">{{product.name}} </h2>
 		<img ng-src="{{product.image_url}}" alt="" class="img-responsive">
 		<div class="text-center">

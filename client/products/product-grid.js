@@ -7,6 +7,7 @@
 		controller: productGridController,
 		controllerAs: 'model',
 		
+		
 	});
 
 	function productGridController(productService, cartService) {
