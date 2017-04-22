@@ -11,7 +11,8 @@
 		var model = this;
 		model.cart = cartService.getCart();
 		model.totalPrice = cartService.getTotalPrice();
-		model.removeFromCart = function (item) {
+		
+		model.removeFromCart = (item) => {
 			cartService.removeFromCart(item);
 			model.cart = cartService.getCart();
 			model.totalPrice = cartService.getTotalPrice();

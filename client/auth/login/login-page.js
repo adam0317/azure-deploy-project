@@ -12,11 +12,12 @@
 	function loginController(userService, $location) {
 		var model = this;
 
-		model.login = function(user) {
-			userService.login(user).then(function (response) {
-				$location.path('/account');
+		model.login = user => {
+			userService.login(user).then((response) => {
+				$location.path('/');
 			})
 		}
+		
 
 	}
 })();

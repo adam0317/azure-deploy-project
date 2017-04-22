@@ -9,11 +9,10 @@ angular.module('app').component('account', {
 
 function Controller(userService) {
 	var model = this;
-	function checkToken() {
-	userService.checkToken().then(function (response) {
-		console.log(response);
+	
+	var checkToken = () =>  {
+		userService.checkToken().then((response) => {
 		model.account = response.data;
-		
 	})
 }
 checkToken();

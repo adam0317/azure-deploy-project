@@ -10,8 +10,8 @@
 	function registerController(userService) {
 		var model = this;
 
-		model.register = function (data) {
-			userService.register(data).then(function (response) {
+		model.register = (data) => {
+			userService.register(data).then((response) => {
 				model.user = response;
 			})
 		}

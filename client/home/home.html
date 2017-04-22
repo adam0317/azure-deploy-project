@@ -1,12 +1,6 @@
 <div class="container">
-	<div class="row">
-		<h1 class="text-center">Featured Product</h1>
-		<h2 class="text-center">{{model.mainProduct.name}}</h2>
-		<img ng-src="{{model.mainProduct.image_url}}" class="center-block">
-		<div class="text-center">
-			{{model.mainProduct.sell_price | currency}} <br><br>
-			<button type="button" class="btn btn-lg btn-primary" ng-click="model.addToCart(model.mainProduct)">Add To Cart</button>
-		</div>
+	<div class="row">		
+		<img src="https://cdn.shopify.com/s/files/1/0543/1637/files/slide_2_1024x_1024x.jpg?v=1484839485" class="center-block">		
 	</div>
-	<product-grid products="products" add-to-cart="addToCart"></product-grid>
+	<product-grid products="model.products" add-to-cart="addToCart"></product-grid>
 </div>

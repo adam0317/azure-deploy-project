@@ -1,26 +1,33 @@
+$font-body: 14px Helvetica, sans-serif;
+$blue: #182E49;
+$white: #fff;
+
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: $font-body;
+  margin: 0;
+  padding: 0;
 }
 
-.nav>li>a {
-  color: #fff;
-}
-.nav>li>a:hover {
-  color: #182E49;
-}
-.nav-pills>li>a{
-  margin-right: 50px;
+nav {
+	
+	li {
+		a{
+			color: $white;
+			margin-right: 50px;
+		}
+		a:focus {
+			color: $blue;
+		}
+		a:hover{
+			color: $blue;
+		}
+	}
 }
 
-.nav>li>a:focus {
-   color: #182E49;
-}
 
-
-.blue {
-  background-color: #182E49;
-  
-  width: 100%;
+.navBar {
+ 	background-color: $blue; 
+	width: 100%;
 }
 
 .header {

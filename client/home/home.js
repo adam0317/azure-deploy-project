@@ -12,27 +12,27 @@
 		var model = this;
 		model.cart = cartService.getCart();
 		model.totalPrice = cartService.getTotalPrice();
-		model.removeFromCart = function (item) {
+		model.removeFromCart = (item) => {
 			cartService.removeFromCart(item);
 			model.cart = cartService.getCart();
 			model.totalPrice = cartService.getTotalPrice();
 		}
-		model.addToCart = function (product) {
+		model.addToCart =  (product) => {
 			cartService.addToCart(product)
 		}
 
 
-		var getMainProduct = () => {
+		var getProducts = () => {
 
-			return productService.getProducts().then(function (response) {
+			return productService.getProducts().then((response) => {
 				model.products = response;
 				model.mainProduct = model.products[Math.floor((Math.random() * model.products.length))];
-				console.log(model.mainProduct);
+				
 			})
 
 
 		}
-		getMainProduct();
+		getProducts();
 
 	}
 })();

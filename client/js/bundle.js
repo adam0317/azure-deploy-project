@@ -85,12 +85,12 @@
 
 	function Controller(userService) {
 		var model = this;
-		function checkToken() {
+
+		var checkToken = function checkToken() {
 			userService.checkToken().then(function (response) {
-				console.log(response);
 				model.account = response.data;
 			});
-		}
+		};
 		checkToken();
 	}
 })();
@@ -166,7 +166,7 @@
 
 		model.login = function (user) {
 			userService.login(user).then(function (response) {
-				$location.path('/account');
+				$location.path('/');
 			});
 		};
 	}
@@ -213,10 +213,8 @@
 
 		var host = new window.URL($location.absUrl()).origin;
 		this.register = function (user) {
-
 			var defer = $q.defer();
 			$http.post(host + '/api/newuser', user).then(function (response) {
-
 				defer.resolve(response.data);
 			});
 			return defer.promise;
@@ -227,14 +225,10 @@
 
 			var deferred = $q.defer();
 			$http.post(host + '/api/login', data).then(function (response) {
-				console.log(response);
 				if (response.status != 200) {
-
 					deferred.resolve(response.data.status);
 				} else {
 					localStorage.setItem('token', JSON.stringify(response.data.token));
-					console.log(response.data.token);
-
 					deferred.resolve(response);
 				}
 			});
@@ -243,9 +237,7 @@
 
 		this.checkToken = function () {
 			var defer = $q.defer();
-
 			var token = {
-
 				"token": JSON.parse(localStorage.getItem('token'))
 			};
 			//console.log(token);
@@ -283,6 +275,7 @@
 		var model = this;
 		model.cart = cartService.getCart();
 		model.totalPrice = cartService.getTotalPrice();
+
 		model.removeFromCart = function (item) {
 			cartService.removeFromCart(item);
 			model.cart = cartService.getCart();
@@ -314,13 +307,13 @@
 			// Save allEntries back to local storage
 			existingEntries.push(item);
 			localStorage.setItem("allEntries", JSON.stringify(existingEntries));
-
 			return existingEntries;
 		};
 
 		this.removeFromCart = function (item) {
+			console.log('item', item);
 
-			if (arguments[0] == null) {
+			if (!item) {
 				localStorage.removeItem("allEntries");
 				return;
 			} else {
@@ -330,7 +323,7 @@
 				}
 				for (var i = existingEntries.length - 1; i >= 0; i--) {
 					if (item.id == existingEntries[i].id) {
-						console.log('match');
+
 						existingEntries.splice(i, 1);
 						localStorage.setItem("allEntries", JSON.stringify(existingEntries));
 						return existingEntries;
@@ -347,10 +340,10 @@
 			}
 			var totalPrice = 0;
 			existingEntries.forEach(function (e) {
-				console.log(e.sell_price);
+
 				totalPrice += e.sell_price;
 			});
-			console.log(totalPrice);
+
 			return totalPrice;
 		};
 
@@ -370,16 +363,13 @@
 				if (response.status != 200) {
 					defer.reject(response);
 				} else {
-
 					var products = cart.map(function (e) {
-
 						return e.id;
 					});
 					var user = {
 						cust_id: response.data.id,
 						products: products
 					};
-					console.log("user.products", user);
 					return user;
 				}
 			}).then(function (user) {
@@ -389,10 +379,6 @@
 				});
 			});
 			return defer.promise;
-		};
-
-		this.cartServiceTest = function () {
-			console.log('working');
 		};
 	});
 })();
@@ -483,15 +469,14 @@
 			cartService.addToCart(product);
 		};
 
-		var getMainProduct = function getMainProduct() {
+		var getProducts = function getProducts() {
 
 			return productService.getProducts().then(function (response) {
 				model.products = response;
 				model.mainProduct = model.products[Math.floor(Math.random() * model.products.length)];
-				console.log(model.mainProduct);
 			});
 		};
-		getMainProduct();
+		getProducts();
 	}
 })();
 
@@ -555,7 +540,10 @@
 
 		templateUrl: 'products/product-grid.html',
 		controller: productGridController,
-		controllerAs: 'model'
+		controllerAs: 'model',
+		bindings: {
+			products: '<'
+		}
 
 	});
 
@@ -564,12 +552,6 @@
 		model.addToCart = function (product) {
 			cartService.addToCart(product);
 		};
-		function getProducts() {
-			productService.getProducts().then(function (response) {
-				model.products = response;
-			});
-		}
-		getProducts();
 	}
 })();
 
@@ -611,8 +593,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../node_modules/css-loader/index.js!./style.css", function() {
-			var newContent = require("!!../../node_modules/css-loader/index.js!./style.css");
+		module.hot.accept("!!../node_modules/css-loader/index.js!../node_modules/sass-loader/lib/loader.js!./style.scss", function() {
+			var newContent = require("!!../node_modules/css-loader/index.js!../node_modules/sass-loader/lib/loader.js!./style.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -33987,6 +33969,7 @@ module.exports = angular;
 
 
 __webpack_require__(1);
+__webpack_require__(14);
 __webpack_require__(4);
 __webpack_require__(0);
 __webpack_require__(5);
@@ -33997,7 +33980,6 @@ __webpack_require__(11);
 __webpack_require__(12);
 __webpack_require__(13);
 __webpack_require__(3);
-__webpack_require__(14);
 __webpack_require__(10);
 __webpack_require__(9);
 __webpack_require__(8);
@@ -35929,7 +35911,7 @@ exports = module.exports = __webpack_require__(21)(undefined);
 
 
 // module
-exports.push([module.i, "body {\n  font: 14px \"Lucida Grande\", Helvetica, Arial, sans-serif;\n}\n\n.nav>li>a {\n  color: #fff;\n}\n.nav>li>a:hover {\n  color: #182E49;\n}\n.nav-pills>li>a{\n  margin-right: 50px;\n}\n\n.nav>li>a:focus {\n   color: #182E49;\n}\n\n\n.blue {\n  background-color: #182E49;\n  \n  width: 100%;\n}\n\n.header {\n  margin: 20px 0 0 0;\n  \n}\n\n\n.header-bottom {\n top: 110%;\n bottom: 0;\n left: 0;\n right: 0;\n}\n\n.main-image {\n  margin: 15px auto;\n  display: block;\n  width: 100%;\n}\n\n.img-responsive{\n  margin: 0 auto;\n}\n\n.home-banner {\n \n  max-height: 300px;\n}\n\n.monies {\n  font-size: 88px;\n  font-weight: 700;\n  color: firebrick;\n  text-align: center;\n}\n\n.hero {\n  /*//background-image: url(\"../images/lens-nikon-glass-light-65661.jpeg\")*/\n  width: 100%;\n  margin: 0;\n  padding: 0;\n}\n\n.footer {\n  margin-top: 50px;\n  background-color: #F2F2F2;\n  height: 200px;\n}\n\n.footerLinks .nav>li>a {\n  color: #000;\n}\n\n.btn-lg {\n  padding: 7px 16px;\n}\n\n", ""]);
+exports.push([module.i, "body {\n  font: 14px Helvetica, sans-serif;\n  margin: 0;\n  padding: 0; }\n\nnav li a {\n  color: #fff;\n  margin-right: 50px; }\n\nnav li a:focus {\n  color: #182E49; }\n\nnav li a:hover {\n  color: #182E49; }\n\n.navBar {\n  background-color: #182E49;\n  width: 100%; }\n\n.header {\n  margin: 20px 0 0 0; }\n\n.header-bottom {\n  top: 110%;\n  bottom: 0;\n  left: 0;\n  right: 0; }\n\n.main-image {\n  margin: 15px auto;\n  display: block;\n  width: 100%; }\n\n.img-responsive {\n  margin: 0 auto; }\n\n.home-banner {\n  max-height: 300px; }\n\n.monies {\n  font-size: 88px;\n  font-weight: 700;\n  color: firebrick;\n  text-align: center; }\n\n.hero {\n  /*//background-image: url(\"../images/lens-nikon-glass-light-65661.jpeg\")*/\n  width: 100%;\n  margin: 0;\n  padding: 0; }\n\n.footer {\n  margin-top: 50px;\n  background-color: #F2F2F2;\n  height: 200px; }\n\n.footerLinks .nav > li > a {\n  color: #000; }\n\n.btn-lg {\n  padding: 7px 16px; }\n", ""]);
 
 // exports
 

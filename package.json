@@ -36,6 +36,8 @@
     "babel-core": "^6.24.1",
     "babel-loader": "^6.4.1",
     "babel-preset-env": "^1.4.0",
+    "node-sass": "^4.5.2",
+    "sass-loader": "^6.0.3",
     "webpack": "^2.4.1"
   }
 }
