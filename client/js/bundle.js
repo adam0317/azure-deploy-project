@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 17);
+/******/ 	return __webpack_require__(__webpack_require__.s = 18);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -106,7 +106,7 @@
 	'use strict';
 
 	var env = {};
-	var angular = __webpack_require__(16);
+	var angular = __webpack_require__(17);
 
 	if (window) {
 		Object.assign(env, window.__env);
@@ -138,6 +138,7 @@
 		});
 
 		$urlRouterProvider.otherwise("/");
+		//$window.Stripe.setPublishableKey('pk_test_gwKaJ0tqSc2RHwauehzBfGar');
 	});
 
 	app.constant('__env', env);
@@ -311,7 +312,6 @@
 		};
 
 		this.removeFromCart = function (item) {
-			console.log('item', item);
 
 			if (!item) {
 				localStorage.removeItem("allEntries");
@@ -356,7 +356,7 @@
 			}
 		};
 
-		this.checkOut = function (cart) {
+		this.checkOut = function (cart, card) {
 			var defer = $q.defer();
 
 			userService.checkToken().then(function (response) {
@@ -372,6 +372,11 @@
 					};
 					return user;
 				}
+			}).then(function () {
+				$http.post('/api/charge', card).then(function (response) {
+					console.log('response', response);
+					//defer.resolve(response);
+				});
 			}).then(function (user) {
 				$http.post('/api/createOrder', JSON.stringify(user)).then(function (response) {
 
@@ -400,8 +405,10 @@
 
 	});
 
-	function Controller(cartService, $location) {
+	function Controller(cartService, $location, checkoutService) {
+
 		var model = this;
+
 		model.cart = cartService.getCart();
 		model.totalPrice = cartService.getTotalPrice();
 		model.removeFromCart = function (item) {
@@ -409,16 +416,73 @@
 			model.cart = cartService.getCart();
 			model.totalPrice = cartService.getTotalPrice();
 		};
-		model.placeOrder = function () {
-			cartService.checkOut(model.cart).then(function (response) {
-				$location.path('/order');
+
+		model.preFillCardData = function () {
+			model.card = {
+				cardNumber: '4242424242424242',
+				cardHolderName: 'Adam',
+				expiryMonth: '06',
+				expiryYear: '18',
+				cvv: '333'
+			};
+		};
+		model.preFillCardData();
+
+		model.placeOrder = function (card) {
+
+			checkoutService.createStripeToken(card).then(function (response) {
+				console.log('response', response);
 			});
+
+			// cartService.checkOut(model.cart, model.card).then((response) => {
+			// 	$location.path('/order');
+			// });
 		};
 	}
 })();
 
 /***/ }),
 /* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+(function () {
+	'use strict';
+
+	angular.module('app').service('checkoutService', function ($http, $q, userService) {
+
+		var model = this;
+		var stripe = Stripe('pk_test_gwKaJ0tqSc2RHwauehzBfGar');
+		var elements = stripe.elements();
+
+		// this.createStripeToken({
+		// 	number: '4242424242424242',
+		// 	cvc: '333',
+		// 	exp_month: '06',
+		// 	exp_year: '18'
+		// }, stripeResponseHandler);
+
+		// function stripeResponseHandler(status, response) {
+
+		// 	if (response.error) {
+		// 		alert(response.error.message);
+
+		// 	} else {
+		// 		// response contains id and card, which contains additional card details
+		// 		var token = response.id;
+		// 		// Insert the token into the form so it gets submitted to the server
+
+		// 		console.log('token', token);
+		// 		return token;
+		// 	}
+		// }
+	});
+})();
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -440,7 +504,7 @@
 })();
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -481,7 +545,7 @@
 })();
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -503,7 +567,7 @@
 })();
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -527,7 +591,7 @@
 })();
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -556,7 +620,7 @@
 })();
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -578,16 +642,16 @@
 })();
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(20);
+var content = __webpack_require__(21);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(24)(content, {});
+var update = __webpack_require__(25)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -604,7 +668,7 @@ if(false) {
 }
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports) {
 
 /**
@@ -33954,38 +34018,39 @@ $provide.value("$locale", {
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(15);
+__webpack_require__(16);
 module.exports = angular;
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 __webpack_require__(1);
-__webpack_require__(14);
+__webpack_require__(15);
 __webpack_require__(4);
 __webpack_require__(0);
 __webpack_require__(5);
 __webpack_require__(6);
 __webpack_require__(7);
+__webpack_require__(8);
 __webpack_require__(2);
-__webpack_require__(11);
 __webpack_require__(12);
 __webpack_require__(13);
+__webpack_require__(14);
 __webpack_require__(3);
+__webpack_require__(11);
 __webpack_require__(10);
 __webpack_require__(9);
-__webpack_require__(8);
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34106,7 +34171,7 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34120,9 +34185,9 @@ function fromByteArray (uint8) {
 
 
 
-var base64 = __webpack_require__(18)
-var ieee754 = __webpack_require__(22)
-var isArray = __webpack_require__(23)
+var base64 = __webpack_require__(19)
+var ieee754 = __webpack_require__(23)
+var isArray = __webpack_require__(24)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -35900,13 +35965,13 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(26)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(27)))
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(21)(undefined);
+exports = module.exports = __webpack_require__(22)(undefined);
 // imports
 
 
@@ -35917,7 +35982,7 @@ exports.push([module.i, "body {\n  font: 14px Helvetica, sans-serif;\n  margin: 
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {/*
@@ -35996,10 +36061,10 @@ function toComment(sourceMap) {
   return '/*# ' + data + ' */';
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(19).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20).Buffer))
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -36089,7 +36154,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -36100,7 +36165,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -36137,7 +36202,7 @@ var stylesInDom = {},
 	singletonElement = null,
 	singletonCounter = 0,
 	styleElementsInsertedAtTop = [],
-	fixUrls = __webpack_require__(25);
+	fixUrls = __webpack_require__(26);
 
 module.exports = function(list, options) {
 	if(typeof DEBUG !== "undefined" && DEBUG) {
@@ -36396,7 +36461,7 @@ function updateLink(linkElement, options, obj) {
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports) {
 
 
@@ -36491,7 +36556,7 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports) {
 
 var g;

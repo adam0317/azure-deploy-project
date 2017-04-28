@@ -48,8 +48,7 @@
 
 
 		$urlRouterProvider.otherwise("/");
-
-
+//$window.Stripe.setPublishableKey('pk_test_gwKaJ0tqSc2RHwauehzBfGar');
 	})
 
 	app.constant('__env', env);

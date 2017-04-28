@@ -6,6 +6,7 @@ var jwt = require('jsonwebtoken');
 var dbController = require('./dbController.js');
 var bcrypt = require('bcrypt');
 var passwordService = require('./passwordService');
+var stripe = require('./stripe.js');
 //Create a new user
 apiRoutes.post('/newuser', dbController.newUser);
 apiRoutes.post('/createOrder', dbController.createOrder);
@@ -18,6 +19,8 @@ apiRoutes.get('/product', dbController.getProducts);
 // apiRoutes.post('product/:id', dbController.postProductbyId);
 // apiRoutes.delete('product/:id', dbController.deleteProductbyId);
 
+
+apiRoutes.post('/charge', stripe.charge);
 
 apiRoutes.post('/login', function (req, res) {
  
@@ -110,5 +113,7 @@ apiRoutes.post('/users', function (req, res) {
     res.json(users);
   });
 });
+
+
 
 module.exports = apiRoutes;

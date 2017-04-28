@@ -65,7 +65,7 @@
 			}
 		}
 
-		this.checkOut = function (cart) {
+		this.checkOut = function (cart, card) {
 			var defer = $q.defer();
 
 			userService.checkToken().then((response) => {
@@ -81,7 +81,14 @@
 					};
 					return user;
 				}
-			}).then((user) => {
+			}).then(() => {
+				$http.post('/api/charge', card).then((response) => {
+					console.log('response', response);
+					//defer.resolve(response);
+				})
+
+			})
+			.then((user) => {
 				$http.post('/api/createOrder', JSON.stringify(user)).then((response) => {
 
 					defer.resolve(response);

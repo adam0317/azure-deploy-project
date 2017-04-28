@@ -5,10 +5,14 @@
 		controller: Controller,
 		controllerAs: 'model',
 
+
 	});
 
-	function Controller(cartService, $location) {
+	function Controller(cartService, $location, checkoutService) {
+
+
 		var model = this;
+		
 		model.cart = cartService.getCart();
 		model.totalPrice = cartService.getTotalPrice();
 		model.removeFromCart = (item) => {
@@ -16,10 +20,31 @@
 			model.cart = cartService.getCart();
 			model.totalPrice = cartService.getTotalPrice();
 		}
-		model.placeOrder = () => {
-			cartService.checkOut(model.cart).then((response) => {
-				$location.path('/order');
-			});
+
+		model.preFillCardData = () => {
+			model.card = {
+				cardNumber: '4242424242424242',
+				cardHolderName: 'Adam',
+				expiryMonth: '06',
+				expiryYear: '18',
+				cvv: '333'
+			};
+			
+		}
+		model.preFillCardData();
+
+		model.placeOrder = (card) => {
+			
+			
+		
+			checkoutService.createStripeToken(card).then((response) => {
+				console.log('response', response);
+			})
+			
+			
+			// cartService.checkOut(model.cart, model.card).then((response) => {
+			// 	$location.path('/order');
+			// });
 
 		}
 	}
