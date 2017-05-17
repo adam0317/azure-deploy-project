@@ -7,8 +7,10 @@ if (!process.env.node_env) {
 
 	exports.charge = function (req, res, next) {
 		console.log('charge fired')
-		var stripeToken = req.body.stripeToken;
+		var stripeToken = req.body.id;
 		var amount = req.body.price * 100;
+		console.log('stripeToken', stripeToken);
+		
 
 		// ensure amount === actual product amount to avoid fraud
 

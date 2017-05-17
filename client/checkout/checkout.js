@@ -12,7 +12,7 @@
 
 
 		var model = this;
-		
+
 		model.cart = cartService.getCart();
 		model.totalPrice = cartService.getTotalPrice();
 		model.removeFromCart = (item) => {
@@ -29,23 +29,33 @@
 				expiryYear: '18',
 				cvv: '333'
 			};
-			
+
 		}
 		model.preFillCardData();
-
-		model.placeOrder = (card) => {
-			
-			
 		
-			checkoutService.createStripeToken(card).then((response) => {
-				console.log('response', response);
-			})
-			
-			
-			// cartService.checkOut(model.cart, model.card).then((response) => {
-			// 	$location.path('/order');
-			// });
 
+
+
+		model.placeOrder = () => {
+			var handler = StripeCheckout.configure({
+			key: 'pk_test_6pRNASCoBOKtIshFeQd4XMUh',
+			image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+			locale: 'auto',
+			token: function (token) {
+				console.log('this fired', token);
+				checkoutService.chargeCard(token).then(function (response) {
+					console.log('response', response);
+					
+				})
+				// Use the token to create the charge with a server-side script.
+				// You can access the token ID with `token.id`
+			}
+		});
+			handler.open({
+				name: 'Super Cameras',
+				description: model.cart.length + ' Items',
+				amount: model.totalPrice * 100
+			});
 		}
 	}
 })();

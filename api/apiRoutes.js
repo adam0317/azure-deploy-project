@@ -12,6 +12,7 @@ apiRoutes.post('/newuser', dbController.newUser);
 apiRoutes.post('/createOrder', dbController.createOrder);
 
 
+
 //Products
 
 apiRoutes.get('/product', dbController.getProducts);
@@ -20,7 +21,7 @@ apiRoutes.get('/product', dbController.getProducts);
 // apiRoutes.delete('product/:id', dbController.deleteProductbyId);
 
 
-apiRoutes.post('/charge', stripe.charge);
+apiRoutes.post('/chargeCard', stripe.charge);
 
 apiRoutes.post('/login', function (req, res) {
  

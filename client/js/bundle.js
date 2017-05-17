@@ -428,15 +428,25 @@
 		};
 		model.preFillCardData();
 
-		model.placeOrder = function (card) {
-
-			checkoutService.createStripeToken(card).then(function (response) {
-				console.log('response', response);
+		model.placeOrder = function () {
+			var handler = StripeCheckout.configure({
+				key: 'pk_test_6pRNASCoBOKtIshFeQd4XMUh',
+				image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+				locale: 'auto',
+				token: function token(_token) {
+					console.log('this fired', _token);
+					checkoutService.chargeCard(_token).then(function (response) {
+						console.log('response', response);
+					});
+					// Use the token to create the charge with a server-side script.
+					// You can access the token ID with `token.id`
+				}
 			});
-
-			// cartService.checkOut(model.cart, model.card).then((response) => {
-			// 	$location.path('/order');
-			// });
+			handler.open({
+				name: 'Super Cameras',
+				description: model.cart.length + ' Items',
+				amount: model.totalPrice * 100
+			});
 		};
 	}
 })();
@@ -453,31 +463,14 @@
 
 	angular.module('app').service('checkoutService', function ($http, $q, userService) {
 
-		var model = this;
-		var stripe = Stripe('pk_test_gwKaJ0tqSc2RHwauehzBfGar');
-		var elements = stripe.elements();
-
-		// this.createStripeToken({
-		// 	number: '4242424242424242',
-		// 	cvc: '333',
-		// 	exp_month: '06',
-		// 	exp_year: '18'
-		// }, stripeResponseHandler);
-
-		// function stripeResponseHandler(status, response) {
-
-		// 	if (response.error) {
-		// 		alert(response.error.message);
-
-		// 	} else {
-		// 		// response contains id and card, which contains additional card details
-		// 		var token = response.id;
-		// 		// Insert the token into the form so it gets submitted to the server
-
-		// 		console.log('token', token);
-		// 		return token;
-		// 	}
-		// }
+		this.chargeCard = function (token) {
+			var defer = $q.defer();
+			$http.post('/api/chargeCard', token).then(function (result) {
+				console.log('api.get fired', result);
+				defer.resolve(result);
+			});
+			return defer.promise;
+		};
 	});
 })();
 
