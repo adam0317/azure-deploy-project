@@ -1,16 +1,18 @@
 
 
+
+exports.charge = function (req, res, next) {
 if (!process.env.node_env) {
 		var config = require('../config.js');
 		var stripe = require("stripe")(
 			config.stripeKey
 		);
-	} else {
+	} 
+	if (process.env.node_env) {
 		// Add to Azure Config File
 		const keySecret = process.env.SECRET_KEY;
 		const stripe = require("stripe")(keySecret);
-	};
-exports.charge = function (req, res, next) {
+			}
 	
 
 	// var config = require('../config.js');
