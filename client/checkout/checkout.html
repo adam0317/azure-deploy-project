@@ -2,30 +2,30 @@
 
 	<div class="text-center">
 		<h1>Checkout </h1>
-	
 	</div>
-	
+	<div class="row">
 
-
-	<form class="form-horizontal">
-		<fieldset>
-			<legend>Order Total: {{model.totalPrice | currency}}</legend>
-			<button type="submit" id="submit-btn" class="btn btn-primary" ng-click="model.placeOrder(model.card)">Pay Now With Stripe</button>
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<h2 class="order-total text-center">Order Total: {{model.totalPrice | currency}}</h2>
+			<button type="submit" id="submit-btn" class="btn btn-primary center-block" ng-click="model.placeOrder(model.card)">Pay Now With Stripe</button>
 			<input type="hidden" name="price" value="{{model.totalPrice | currency}}" ) <div class="form-group">
-			
-		</fieldset>
-	</form>
+		</div>
+		<div class="col-md-4"></div>
+	</div>
+
+
 
 	<div class="text-center">
-		<h1>Your Items </h1>
-	
+		<h3>Your Items </h3>
+
 	</div>
 
 
 	<div class="row">
 		<div ng-repeat="item in model.cart track by $index" class="col-lg-4">
 			<h3 class="text-center">{{item.name}}<br>{{item.sell_price | currency}}</h2>
-			<img ng-src="{{item.image_url}}" alt="" class="img-responsive">		
+				<img ng-src="{{item.image_url}}" alt="" class="img-responsive">
 		</div>
 	</div>
 </div>

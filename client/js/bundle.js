@@ -417,39 +417,25 @@
 			model.totalPrice = cartService.getTotalPrice();
 		};
 
-		// model.preFillCardData = () => {
-		// 	model.card = {
-		// 		cardNumber: '4242424242424242',
-		// 		cardHolderName: 'Adam',
-		// 		expiryMonth: '06',
-		// 		expiryYear: '18',
-		// 		cvv: '333'
-		// 	};
-
-		// }
-		// model.preFillCardData();
-
-
 		model.placeOrder = function () {
 			var amount = model.totalPrice * 100;
+			var email = 'adam@adam.com';
 			var handler = StripeCheckout.configure({
 				key: 'pk_test_MuxO5FCjjPatdlIXWxkm3lW2',
 				image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
 				locale: 'auto',
 				token: function token(_token) {
-					console.log('this fired', _token);
+
 					checkoutService.chargeCard(_token, amount).then(function (response) {
 						console.log('response', response);
 					});
-					// Use the token to create the charge with a server-side script.
-					// You can access the token ID with `token.id`
 				}
 			});
 			handler.open({
 				name: 'Super Cameras',
 				description: model.cart.length + ' Items',
 				amount: amount,
-				email: 'adam@adam.com'
+				email: email
 
 			});
 		};
@@ -35976,7 +35962,7 @@ exports = module.exports = __webpack_require__(22)(undefined);
 
 
 // module
-exports.push([module.i, "body {\n  font: 14px Helvetica, sans-serif;\n  margin: 0;\n  padding: 0; }\n\nnav li a {\n  color: #fff;\n  margin-right: 50px; }\n\nnav li a:focus {\n  color: #182E49; }\n\nnav li a:hover {\n  color: #182E49; }\n\n.navBar {\n  background-color: #182E49;\n  width: 100%; }\n\n.header {\n  margin: 20px 0 0 0; }\n\n.header-bottom {\n  top: 110%;\n  bottom: 0;\n  left: 0;\n  right: 0; }\n\n.main-image {\n  margin: 15px auto;\n  display: block;\n  width: 100%; }\n\n.img-responsive {\n  margin: 0 auto; }\n\n.home-banner {\n  max-height: 300px; }\n\n.monies {\n  font-size: 88px;\n  font-weight: 700;\n  color: firebrick;\n  text-align: center; }\n\n.hero {\n  /*//background-image: url(\"../images/lens-nikon-glass-light-65661.jpeg\")*/\n  width: 100%;\n  margin: 0;\n  padding: 0; }\n\n.footer {\n  margin-top: 50px;\n  background-color: #F2F2F2;\n  height: 200px; }\n\n.footerLinks .nav > li > a {\n  color: #000; }\n\n.btn-lg {\n  padding: 7px 16px; }\n", ""]);
+exports.push([module.i, "body {\n  font: 14px Helvetica, sans-serif;\n  margin: 0;\n  padding: 0; }\n\nnav li a {\n  color: #fff;\n  margin-right: 50px; }\n\nnav li a:focus {\n  color: #182E49; }\n\nnav li a:hover {\n  color: #182E49; }\n\n.navBar {\n  background-color: #182E49;\n  width: 100%; }\n\n.header {\n  margin: 20px 0 0 0; }\n\n.header-bottom {\n  top: 110%;\n  bottom: 0;\n  left: 0;\n  right: 0; }\n\n.main-image {\n  margin: 15px auto;\n  display: block;\n  width: 100%; }\n\n.img-responsive {\n  margin: 0 auto; }\n\n.home-banner {\n  max-height: 300px; }\n\n.monies {\n  font-size: 88px;\n  font-weight: 700;\n  color: firebrick;\n  text-align: center; }\n\n.hero {\n  /*//background-image: url(\"../images/lens-nikon-glass-light-65661.jpeg\")*/\n  width: 100%;\n  margin: 0;\n  padding: 0; }\n\n.footer {\n  margin-top: 50px;\n  background-color: #F2F2F2;\n  height: 200px; }\n\n.footerLinks .nav > li > a {\n  color: #000; }\n\n.btn-lg {\n  padding: 7px 16px; }\n\n.order-total {\n  margin: 25px; }\n", ""]);
 
 // exports
 

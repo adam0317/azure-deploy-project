@@ -21,21 +21,6 @@
 			model.totalPrice = cartService.getTotalPrice();
 		}
 
-		// model.preFillCardData = () => {
-		// 	model.card = {
-		// 		cardNumber: '4242424242424242',
-		// 		cardHolderName: 'Adam',
-		// 		expiryMonth: '06',
-		// 		expiryYear: '18',
-		// 		cvv: '333'
-		// 	};
-
-		// }
-		// model.preFillCardData();
-		
-
-
-
 		model.placeOrder = () => {
 			var amount = model.totalPrice * 100;
 			var email = 'adam@adam.com'
@@ -44,13 +29,11 @@
 			image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
 			locale: 'auto',
 			token: function (token) {
-				console.log('this fired', token);
+				
 				checkoutService.chargeCard(token, amount).then(function (response) {
 					console.log('response', response);
 					
 				})
-				// Use the token to create the charge with a server-side script.
-				// You can access the token ID with `token.id`
 			}
 		});
 			handler.open({
