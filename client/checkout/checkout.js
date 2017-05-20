@@ -21,29 +21,31 @@
 			model.totalPrice = cartService.getTotalPrice();
 		}
 
-		model.preFillCardData = () => {
-			model.card = {
-				cardNumber: '4242424242424242',
-				cardHolderName: 'Adam',
-				expiryMonth: '06',
-				expiryYear: '18',
-				cvv: '333'
-			};
+		// model.preFillCardData = () => {
+		// 	model.card = {
+		// 		cardNumber: '4242424242424242',
+		// 		cardHolderName: 'Adam',
+		// 		expiryMonth: '06',
+		// 		expiryYear: '18',
+		// 		cvv: '333'
+		// 	};
 
-		}
-		model.preFillCardData();
+		// }
+		// model.preFillCardData();
 		
 
 
 
 		model.placeOrder = () => {
+			var amount = model.totalPrice * 100;
+			var email = 'adam@adam.com'
 			var handler = StripeCheckout.configure({
-			key: 'pk_test_6pRNASCoBOKtIshFeQd4XMUh',
+			key: 'pk_test_MuxO5FCjjPatdlIXWxkm3lW2',
 			image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
 			locale: 'auto',
 			token: function (token) {
 				console.log('this fired', token);
-				checkoutService.chargeCard(token).then(function (response) {
+				checkoutService.chargeCard(token, amount).then(function (response) {
 					console.log('response', response);
 					
 				})
@@ -54,7 +56,9 @@
 			handler.open({
 				name: 'Super Cameras',
 				description: model.cart.length + ' Items',
-				amount: model.totalPrice * 100
+				amount: amount,
+				email: email,
+
 			});
 		}
 	}

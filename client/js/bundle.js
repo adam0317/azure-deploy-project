@@ -417,25 +417,28 @@
 			model.totalPrice = cartService.getTotalPrice();
 		};
 
-		model.preFillCardData = function () {
-			model.card = {
-				cardNumber: '4242424242424242',
-				cardHolderName: 'Adam',
-				expiryMonth: '06',
-				expiryYear: '18',
-				cvv: '333'
-			};
-		};
-		model.preFillCardData();
+		// model.preFillCardData = () => {
+		// 	model.card = {
+		// 		cardNumber: '4242424242424242',
+		// 		cardHolderName: 'Adam',
+		// 		expiryMonth: '06',
+		// 		expiryYear: '18',
+		// 		cvv: '333'
+		// 	};
+
+		// }
+		// model.preFillCardData();
+
 
 		model.placeOrder = function () {
+			var amount = model.totalPrice * 100;
 			var handler = StripeCheckout.configure({
-				key: 'pk_test_6pRNASCoBOKtIshFeQd4XMUh',
+				key: 'pk_test_MuxO5FCjjPatdlIXWxkm3lW2',
 				image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
 				locale: 'auto',
 				token: function token(_token) {
 					console.log('this fired', _token);
-					checkoutService.chargeCard(_token).then(function (response) {
+					checkoutService.chargeCard(_token, amount).then(function (response) {
 						console.log('response', response);
 					});
 					// Use the token to create the charge with a server-side script.
@@ -445,7 +448,9 @@
 			handler.open({
 				name: 'Super Cameras',
 				description: model.cart.length + ' Items',
-				amount: model.totalPrice * 100
+				amount: amount,
+				email: 'adam@adam.com'
+
 			});
 		};
 	}
@@ -463,7 +468,9 @@
 
 	angular.module('app').service('checkoutService', function ($http, $q, userService) {
 
-		this.chargeCard = function (token) {
+		this.chargeCard = function (token, amount) {
+			console.log('amoutn', amount);
+			token.amount = amount;
 			var defer = $q.defer();
 			$http.post('/api/chargeCard', token).then(function (result) {
 				console.log('api.get fired', result);
