@@ -1,9 +1,13 @@
 <div class="container">
+	<!--Add logic to check if user is logged in on page load
+		If logged in present the checkout button
+		If not logged in offer a guest checkout or register account button
+		Write function to create anon order using math.random to create a user ID-->
 
 	<div class="text-center">
 		<h1>Checkout </h1>
 	</div>
-	<div class="row">
+	<div class="row" ng-show="model.loggedIn">
 
 		<div class="col-md-4"></div>
 		<div class="col-md-4">
@@ -12,6 +16,19 @@
 			<input type="hidden" name="price" value="{{model.totalPrice | currency}}" ) <div class="form-group">
 		</div>
 		<div class="col-md-4"></div>
+	</div>
+
+	<div class="login" ng-show="!model.loggedIn">
+		<div class="alert alert-danger text-center">Please Login To Continue</div>
+		<div class="row">
+			<div class="col-md-6" ng-show="!model.login">
+				<login-page></login-page>
+			</div>
+			<div class="col-md-6" ng-show="model.register">
+				<register></register>
+			</div>
+		</div>
+
 	</div>
 
 

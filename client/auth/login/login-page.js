@@ -9,12 +9,12 @@
 		
 	});
 
-	function loginController(userService, $location) {
+	function loginController($state, userService, $location) {
 		var model = this;
 
 		model.login = user => {
 			userService.login(user).then((response) => {
-				$location.path('/');
+				$state.reload();
 			})
 		}
 		

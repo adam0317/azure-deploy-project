@@ -7,12 +7,13 @@
 		controllerAs: 'model',
 	});
 
-	function registerController(userService) {
+	function registerController($state, userService) {
 		var model = this;
 
 		model.register = (data) => {
 			userService.register(data).then((response) => {
 				model.user = response;
+				$state.reload();
 			})
 		}
 	}

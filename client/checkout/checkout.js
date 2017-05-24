@@ -8,22 +8,28 @@
 
 	});
 
-	function Controller(cartService, $location, checkoutService) {
+	function Controller(cartService, $location, userService, checkoutService) {
 
 
 		var model = this;
+		model.loggedIn = false;
+
+		userService.checkToken().then(function (response) {
+			console.log('userService.checkToken Fired', response);
+			if (response.data.id) {
+				model.loggedIn = true;
+				console.log('logged in')
+			} else {
+				console.log('not logged in');
+			}
+		})
 
 		model.cart = cartService.getCart();
+		var cart = model.cart;
 		model.totalPrice = cartService.getTotalPrice();
-		model.removeFromCart = (item) => {
-			cartService.removeFromCart(item);
-			model.cart = cartService.getCart();
-			model.totalPrice = cartService.getTotalPrice();
-		}
 
 		model.placeOrder = () => {
-			var amount = model.totalPrice * 100;
-			var email = 'adam@adam.com'
+			var amount = model.totalPrice * 100;		
 			var handler = StripeCheckout.configure({
 			key: 'pk_test_MuxO5FCjjPatdlIXWxkm3lW2',
 			image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
@@ -31,7 +37,7 @@
 			token: function (token) {
 				
 				checkoutService.chargeCard(token, amount).then(function (response) {
-					console.log('response', response);
+					$location.path('/order');
 					
 				})
 			}
@@ -39,8 +45,8 @@
 			handler.open({
 				name: 'Super Cameras',
 				description: model.cart.length + ' Items',
-				amount: amount,
-				email: email,
+				amount: amount
+				
 
 			});
 		}

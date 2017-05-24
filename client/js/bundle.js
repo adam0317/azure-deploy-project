@@ -162,12 +162,12 @@
 
 	});
 
-	function loginController(userService, $location) {
+	function loginController($state, userService, $location) {
 		var model = this;
 
 		model.login = function (user) {
 			userService.login(user).then(function (response) {
-				$location.path('/');
+				$state.reload();
 			});
 		};
 	}
@@ -189,12 +189,13 @@
 		controllerAs: 'model'
 	});
 
-	function registerController(userService) {
+	function registerController($state, userService) {
 		var model = this;
 
 		model.register = function (data) {
 			userService.register(data).then(function (response) {
 				model.user = response;
+				$state.reload();
 			});
 		};
 	}
@@ -244,7 +245,7 @@
 			//console.log(token);
 			$http.post(host + '/api/account', token).then(function (response) {
 				if (response.status != 200) {
-					console.log(response.status);
+					//console.log(response.status);
 					defer.reject(response);
 				} else {
 					defer.resolve(response);
@@ -373,9 +374,9 @@
 					return user;
 				}
 			}).then(function () {
-				$http.post('/api/charge', card).then(function (response) {
-					console.log('response', response);
-					//defer.resolve(response);
+				$http.post(host + '/api/chargeCard', token).then(function (result) {
+					console.log('api.get fired', result);
+					//defer.resolve(result);
 				});
 			}).then(function (user) {
 				$http.post('/api/createOrder', JSON.stringify(user)).then(function (response) {
@@ -405,21 +406,27 @@
 
 	});
 
-	function Controller(cartService, $location, checkoutService) {
+	function Controller(cartService, $location, userService, checkoutService) {
 
 		var model = this;
+		model.loggedIn = false;
+
+		userService.checkToken().then(function (response) {
+			console.log('userService.checkToken Fired', response);
+			if (response.data.id) {
+				model.loggedIn = true;
+				console.log('logged in');
+			} else {
+				console.log('not logged in');
+			}
+		});
 
 		model.cart = cartService.getCart();
+		var cart = model.cart;
 		model.totalPrice = cartService.getTotalPrice();
-		model.removeFromCart = function (item) {
-			cartService.removeFromCart(item);
-			model.cart = cartService.getCart();
-			model.totalPrice = cartService.getTotalPrice();
-		};
 
 		model.placeOrder = function () {
 			var amount = model.totalPrice * 100;
-			var email = 'adam@adam.com';
 			var handler = StripeCheckout.configure({
 				key: 'pk_test_MuxO5FCjjPatdlIXWxkm3lW2',
 				image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
@@ -427,15 +434,14 @@
 				token: function token(_token) {
 
 					checkoutService.chargeCard(_token, amount).then(function (response) {
-						console.log('response', response);
+						$location.path('/order');
 					});
 				}
 			});
 			handler.open({
 				name: 'Super Cameras',
 				description: model.cart.length + ' Items',
-				amount: amount,
-				email: email
+				amount: amount
 
 			});
 		};
@@ -454,8 +460,9 @@
 
 	angular.module('app').service('checkoutService', function ($http, $q, userService, $location) {
 		var host = new window.URL($location.absUrl()).origin;
+
 		this.chargeCard = function (token, amount) {
-			console.log('amoutn', amount);
+			console.log('amount', amount);
 			token.amount = amount;
 			var defer = $q.defer();
 			$http.post(host + '/api/chargeCard', token).then(function (result) {
@@ -464,6 +471,40 @@
 			});
 			return defer.promise;
 		};
+
+		// var defer = $q.defer();
+
+		// 	userService.checkToken().then((response) => {
+		// 		if (response.status != 200) {
+		// 			defer.reject(response);
+		// 		} else {
+		// 			var products = cart.map((e) => {
+		// 				return e.id;
+		// 			})
+		// 			var user = {
+		// 				cust_id: response.data.id,
+		// 				products: products
+		// 			};
+		// 			console.log('user', user);
+
+		// 			return user;
+		// 		}
+		// 	}).then((user) => {
+		// 		$http.post(host + '/api/chargeCard', token).then(function (result) {
+		// 			console.log('api.get fired', result);
+		// 			return user;
+		// 		})
+
+		// 	})
+		// 		.then((user) => {
+		// 			$http.post('/api/createOrder', JSON.stringify(user)).then((response) => {
+
+		// 				defer.resolve(response);
+		// 			})
+
+		// 		})
+		// 	return defer.promise;
+		// }
 	});
 })();
 
@@ -547,8 +588,13 @@
 
 	});
 
-	function Controller() {
+	function Controller($state) {
 		var model = this;
+
+		model.logOut = function () {
+			localStorage.removeItem('token');
+			$state.reload();
+		};
 	}
 })();
 

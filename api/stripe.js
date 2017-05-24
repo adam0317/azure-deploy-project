@@ -15,7 +15,9 @@ if (process.env.node_env) {
 
 
 exports.charge = function (req, res, next) {
-
+	console.log('email', req.body);
+	console.log('id', req.body.id);
+	
 	var amount = req.body.amount;
 	stripe.customers.create({
 		email: req.body.email,

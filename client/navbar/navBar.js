@@ -7,8 +7,13 @@
 		
 	})
 
-	function Controller() {
+	function Controller($state) {
 		var model = this;
+
+		model.logOut = function () {
+			localStorage.removeItem('token');
+			$state.reload();
+		}
 		
 	}
 })();
