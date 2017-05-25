@@ -14,6 +14,7 @@
 
 		model.login = user => {
 			userService.login(user).then((response) => {
+				model.loggedIn = true;
 				$state.reload();
 			})
 		}
