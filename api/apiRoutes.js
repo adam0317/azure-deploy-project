@@ -10,16 +10,8 @@ var stripe = require('./stripe.js');
 //Create a new user
 apiRoutes.post('/newuser', dbController.newUser);
 apiRoutes.post('/createOrder', dbController.createOrder);
-
-
-
 //Products
-
 apiRoutes.get('/product', dbController.getProducts);
-// apiRoutes.get('product/:id', dbController.getProductbyId);
-// apiRoutes.post('product/:id', dbController.postProductbyId);
-// apiRoutes.delete('product/:id', dbController.deleteProductbyId);
-
 
 apiRoutes.post('/chargeCard', stripe.charge);
 

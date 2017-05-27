@@ -15,7 +15,7 @@
 		model.loggedIn = false;
 
 		userService.checkToken().then(function (response) {
-			console.log('userService.checkToken Fired', response);
+			
 			if (response.data.id) {
 				model.loggedIn = true;
 				console.log('logged in')
