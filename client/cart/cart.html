@@ -2,12 +2,24 @@
 
 
 	<div class="text-center">
-		<h1>Total In Cart {{model.totalPrice | currency}}</div>
-
-	<div ng-repeat="item in model.cart track by $index" class="col-lg-4">
-		<h2 class="text-center">{{item.name}} </h2>
-		<img ng-src="{{item.image_url}}" alt="" class="img-responsive">
-		<button type="button" class="btn btn-large btn-lrg btn-danger center-block" ng-click="model.removeFromCart(item)">Remove From Cart</button>
+		<h1>Total In Cart {{model.totalPrice | currency}}
 	</div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Item Name</th>
+				<th>Price</th>
+				<th>Image</th>
+			</tr>
+		</thead>
+		<tr ng-repeat="item in model.cart">
+			<td>{{item.name}}</td>
+			<td>{{item.sell_price | currency}}</td>
+			<td><img ng-src="{{item.image_url}}" alt="" class="smallImage"></td>
+			<td><button type="button" class="btn btn-large btn-lrg btn-danger center-block" ng-click="model.removeFromCart(item)">Remove From Cart</button></td>
+		</tr>
+
+	</table>
+
 
 </div>
