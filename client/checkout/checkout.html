@@ -8,11 +8,14 @@
 		<h1>Checkout </h1>
 	</div>
 	<div class="row" ng-show="model.loggedIn">
-
+		<div class="alert alert-success" ng-show="!model.stripeTest">
+			Instructions to Test Checkout with Stripe API:  <br>Use any email address <br>Use 4242 4242 4242 4242 for card number<br> Use 09/20 for expiration date<br> Use 333 for CVV number'
+		</div>
 		<div class="col-md-4"></div>
 		<div class="col-md-4">
 			<h2 class="order-total text-center">Order Total: {{model.totalPrice | currency}}</h2>
-			<button type="submit" id="submit-btn" class="btn btn-primary center-block" ng-click="model.placeOrder(model.card)">Pay Now With Stripe</button>
+			<button ng-show="model.showStripeButton" type="submit" id="submit-btn" class="btn btn-primary center-block" ng-click="model.placeOrder(model.card)">Pay Now With Stripe</button>
+			<button ng-show="!model.showStripeButton" type="submit" id="submit-btn" class="btn btn-primary center-block disabled" >Pay Now With Stripe</button>
 			<input type="hidden" name="price" value="{{model.totalPrice | currency}}" ) <div class="form-group">
 		</div>
 		<div class="col-md-4"></div>

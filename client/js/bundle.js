@@ -449,11 +449,16 @@
 			}
 		});
 
+		model.showStripeButton = false;
 		model.cart = cartService.getCart();
 		var cart = model.cart;
+		if (model.cart.length > 0) {
+			model.showStripeButton = true;
+		}
 		model.totalPrice = cartService.getTotalPrice();
 
 		model.placeOrder = function () {
+
 			var amount = model.totalPrice * 100;
 			var handler = StripeCheckout.configure({
 				key: 'pk_test_MuxO5FCjjPatdlIXWxkm3lW2',
