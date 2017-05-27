@@ -1,5 +1,16 @@
+<div class="row">
+	<div class="text-center">
+		<h2>Search For Cameras</h2>
+	</div>
+	<div class="col-md-3"></div>
+	<div class="col-md-6">
+		<input type="text" ng-model="model.searchBox" class="form-control"></input>
+	</div>
+	<div class="col-md-3"></div>
+
+</div>
 <div class="product">
-	<div ng-repeat="product in model.products track by $index" class="col-md-4 product-image">
+	<div ng-repeat="product in model.products | filter: {name: model.searchBox} track by $index " class="col-md-4 product-image">
 		<h2 class="text-center">{{product.name}} </h2>
 		<img ng-src="{{product.image_url}}" alt="" class="img-responsive">
 		<div class="text-center">

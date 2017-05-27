@@ -16,20 +16,20 @@
 
 		function isLoggedIn() {
 			userService.checkToken().then(function (response) {
-			console.log('userService.checkToken Fired', response);
-			if (response.data.id) {
-				model.loggedIn = true;
-				console.log('logged in navbar')
-				return;
-			} else {
-				model.loggedIn = false;
-				console.log('not logged in');
-				return;
-			}
-		})
-	}
-	isLoggedIn();
-		
+				console.log('userService.checkToken Fired', response);
+				if (response.data.id) {
+					model.loggedIn = true;
+					console.log('logged in navbar')
+					return;
+				} else {
+					model.loggedIn = false;
+					console.log('not logged in');
+					return;
+				}
+			})
+		}
+		isLoggedIn();
+
 		model.login = function () {
 			//model.loggedIn = true;
 		}
