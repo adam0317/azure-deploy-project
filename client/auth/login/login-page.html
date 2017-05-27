@@ -5,6 +5,7 @@
 	<div class="col-md-4"></div>
 	<div class="col-md-4">
 		<form ng-show="!model.loggedIn">
+			<div class="alert alert-danger" ng-show="model.loginError">Username/Password Incorrect</div>
 			<div class="form-group">
 				<label>Email</label>
 				<input type="text" class="form-control" name="email" placeholder="Email" ng-model="model.user.email">
@@ -21,7 +22,7 @@
 	</div>
 	<div class="col-md-4"></div>
 	<div class="isLoggedin" ng-show="model.loggedIn">
-		<h1>You are logged in as {{model.user.first_name}} {{model.user.last_name}}</h1>
+		<h1>You are currently logged in as {{model.user.first_name}} {{model.user.last_name}}</h1>
 	</div>
 
 </div>

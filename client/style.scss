@@ -1,12 +1,18 @@
 $font-body: 14px Helvetica, sans-serif;
 $blue: #182E49;
 $white: #fff;
-
+html {
+ position: relative;
+  
+}
 body {
+
   font: $font-body;
   margin: 0;
   padding: 0;
+ 
 }
+
 
 nav {
 	
@@ -14,6 +20,7 @@ nav {
 		a{
 			color: $white;
 			margin-right: 50px;
+      font-size: 20px;
 		}
 		a:focus {
 			color: $blue;
@@ -73,13 +80,25 @@ nav {
 }
 
 .footer {
-  margin-top: 50px;
-  background-color: #F2F2F2;
-  height: 200px;
+  position: absolute;
+  width: 100%;
+  bottom: -3;
+  margin-top: 40px;
+  background-color: $blue;
+  height: 60px;
+  padding-bottom: 10px;
 }
 
-.footerLinks .nav>li>a {
-  color: #000;
+.footerLinks a{
+  margin-top: 5px;
+  color: white;
+  font-size: 18px; 
+}
+.footerItem {
+  margin-top: 15px;
+}
+.footerSpace {
+  height: 75px;
 }
 
 .btn-lg {
@@ -90,3 +109,11 @@ nav {
   margin: 25px;
 }
 
+.checkout {
+  margin: 25px;
+}
+
+.product {
+  margin: 20px;
+  padding: 50px;
+}

@@ -16,12 +16,11 @@
 
 			var deferred = $q.defer();
 			$http.post(host + '/api/login', data).then((response) => {
-				if (response.status != 200) {
-					deferred.resolve(response.data.status);
-				} else {
-					localStorage.setItem('token', JSON.stringify(response.data.token));
-					deferred.resolve(response);
-				}
+				localStorage.setItem('token', JSON.stringify(response.data.token));
+				deferred.resolve(response);
+			}).catch(function (e) {
+				
+				deferred.resolve(e);
 			})
 			return deferred.promise;
 		}

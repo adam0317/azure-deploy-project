@@ -7,17 +7,14 @@
 </head>
 
 <body ng-app="app">
+	
+		<nav-bar></nav-bar>
+		<div ui-view></div>
+		<footer></footer>
 
-	<nav-bar></nav-bar>
-
-	<div ui-view></div>
-
-	<footer></footer>
 	<!--Scripts-->
-
 	<script src="https://checkout.stripe.com/checkout.js"></script>
 	<script src="./js/bundle.js"></script>
-
 	<script src="https://js.stripe.com/v3/"></script>
 	<script src="./scripts/angular-ui-router/release/angular-ui-router.js"></script>
 	<script src="./scripts/angular-payments/lib/angular-payments.js"></script>

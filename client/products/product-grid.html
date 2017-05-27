@@ -9,13 +9,15 @@
 	<div class="col-md-3"></div>
 
 </div>
-<div class="product">
-	<div ng-repeat="product in model.products | filter: {name: model.searchBox} track by $index " class="col-md-4 product-image">
-		<h2 class="text-center">{{product.name}} </h2>
-		<img ng-src="{{product.image_url}}" alt="" class="img-responsive">
-		<div class="text-center">
-			{{product.sell_price | currency}} <br><br>
-			<button type="button" class="btn btn-lg btn-primary" ng-click="model.addToCart(product)">Add To Cart</button>
+<div class="row clearfix">
+	<div class="product">
+		<div ng-repeat="product in model.products | filter: {name: model.searchBox} track by $index " class="col-md-4 product-image">
+			<h2 class="text-center">{{product.name}} </h2>
+			<img ng-src="{{product.image_url}}" alt="" class="img-responsive">
+			<div class="text-center">
+				{{product.sell_price | currency}} <br><br>
+				<button type="button" class="btn btn-lg btn-primary" ng-click="model.addToCart(product)">Add To Cart</button>
+			</div>
 		</div>
 	</div>
 </div>

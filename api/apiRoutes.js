@@ -38,7 +38,7 @@ apiRoutes.post('/login', function (req, res) {
 
       // check if password matches
       if (!passwordService.validPassword(req.body.password, user.password)) {
-        res.status(403).send({ success: false, message: 'Authentication failed. Wrong Password.' });
+        res.status(403).send({ success: false, message: 'Authentication failed. Wrong Passwords.' });
 
       }
       else {

@@ -14,11 +14,11 @@
 		model.loggedIn = false;
 
 		userService.checkToken().then(function (response) {
-			
+
 			if (response.data.id) {
-				model.user = response.data;	
+				model.user = response.data;
 				model.loggedIn = true;
-				console.log('logged in')
+
 			} else {
 				console.log('not logged in');
 			}
@@ -26,7 +26,14 @@
 
 		model.login = user => {
 			userService.login(user).then((response) => {
-				$state.reload();
+				if (response.status != 200) {
+					model.loginError = true;
+					console.log('error', model.loginError);
+					//$state.reload();
+				}
+				else {
+				$state.reload();					
+				}
 			})
 		}
 

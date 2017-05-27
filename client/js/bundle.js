@@ -171,7 +171,6 @@
 			if (response.data.id) {
 				model.user = response.data;
 				model.loggedIn = true;
-				console.log('logged in');
 			} else {
 				console.log('not logged in');
 			}
@@ -179,7 +178,13 @@
 
 		model.login = function (user) {
 			userService.login(user).then(function (response) {
-				$state.reload();
+				if (response.status != 200) {
+					model.loginError = true;
+					console.log('error', model.loginError);
+					//$state.reload();
+				} else {
+					$state.reload();
+				}
 			});
 		};
 	}
@@ -201,13 +206,25 @@
 		controllerAs: 'model'
 	});
 
-	function registerController($state, userService) {
+	function registerController($state, userService, $location) {
 		var model = this;
+		userService.checkToken().then(function (response) {
+
+			if (response.data.id) {
+				$location.path('/login');
+			} else {
+				console.log('not logged in');
+			}
+		});
 
 		model.register = function (data) {
 			userService.register(data).then(function (response) {
-				model.user = response;
-				$state.reload();
+				return data;
+			}).then(function (data) {
+				console.log('data', data);
+				userService.login(data).then(function () {
+					$state.reload();
+				});
 			});
 		};
 	}
@@ -239,12 +256,11 @@
 
 			var deferred = $q.defer();
 			$http.post(host + '/api/login', data).then(function (response) {
-				if (response.status != 200) {
-					deferred.resolve(response.data.status);
-				} else {
-					localStorage.setItem('token', JSON.stringify(response.data.token));
-					deferred.resolve(response);
-				}
+				localStorage.setItem('token', JSON.stringify(response.data.token));
+				deferred.resolve(response);
+			}).catch(function (e) {
+
+				deferred.resolve(e);
 			});
 			return deferred.promise;
 		};
@@ -36045,7 +36061,7 @@ exports = module.exports = __webpack_require__(22)(undefined);
 
 
 // module
-exports.push([module.i, "body {\n  font: 14px Helvetica, sans-serif;\n  margin: 0;\n  padding: 0; }\n\nnav li a {\n  color: #fff;\n  margin-right: 50px; }\n\nnav li a:focus {\n  color: #182E49; }\n\nnav li a:hover {\n  color: #182E49; }\n\n.navBar {\n  background-color: #182E49;\n  width: 100%; }\n\n.header {\n  margin: 20px 0 0 0; }\n\n.header-bottom {\n  top: 110%;\n  bottom: 0;\n  left: 0;\n  right: 0; }\n\n.main-image {\n  margin: 15px auto;\n  display: block;\n  width: 100%; }\n\n.img-responsive {\n  margin: 0 auto; }\n\n.home-banner {\n  max-height: 300px; }\n\n.monies {\n  font-size: 88px;\n  font-weight: 700;\n  color: firebrick;\n  text-align: center; }\n\n.hero {\n  /*//background-image: url(\"../images/lens-nikon-glass-light-65661.jpeg\")*/\n  width: 100%;\n  margin: 0;\n  padding: 0; }\n\n.footer {\n  margin-top: 50px;\n  background-color: #F2F2F2;\n  height: 200px; }\n\n.footerLinks .nav > li > a {\n  color: #000; }\n\n.btn-lg {\n  padding: 7px 16px; }\n\n.order-total {\n  margin: 25px; }\n", ""]);
+exports.push([module.i, "html {\n  position: relative; }\n\nbody {\n  font: 14px Helvetica, sans-serif;\n  margin: 0;\n  padding: 0; }\n\nnav li a {\n  color: #fff;\n  margin-right: 50px;\n  font-size: 20px; }\n\nnav li a:focus {\n  color: #182E49; }\n\nnav li a:hover {\n  color: #182E49; }\n\n.navBar {\n  background-color: #182E49;\n  width: 100%; }\n\n.header {\n  margin: 20px 0 0 0; }\n\n.header-bottom {\n  top: 110%;\n  bottom: 0;\n  left: 0;\n  right: 0; }\n\n.main-image {\n  margin: 15px auto;\n  display: block;\n  width: 100%; }\n\n.img-responsive {\n  margin: 0 auto; }\n\n.home-banner {\n  max-height: 300px; }\n\n.monies {\n  font-size: 88px;\n  font-weight: 700;\n  color: firebrick;\n  text-align: center; }\n\n.hero {\n  /*//background-image: url(\"../images/lens-nikon-glass-light-65661.jpeg\")*/\n  width: 100%;\n  margin: 0;\n  padding: 0; }\n\n.footer {\n  position: absolute;\n  width: 100%;\n  bottom: -3;\n  margin-top: 40px;\n  background-color: #182E49;\n  height: 60px;\n  padding-bottom: 10px; }\n\n.footerLinks a {\n  margin-top: 5px;\n  color: white;\n  font-size: 18px; }\n\n.footerItem {\n  margin-top: 15px; }\n\n.footerSpace {\n  height: 75px; }\n\n.btn-lg {\n  padding: 7px 16px; }\n\n.order-total {\n  margin: 25px; }\n\n.checkout {\n  margin: 25px; }\n\n.product {\n  margin: 20px;\n  padding: 50px; }\n", ""]);
 
 // exports
 
