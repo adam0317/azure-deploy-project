@@ -14,6 +14,8 @@
 			isLoggedIn();
 		})
 
+		
+
 		function isLoggedIn() {
 			userService.checkToken().then(function (response) {			
 				if (response.data.id) {

@@ -27,7 +27,7 @@
 				model.products.forEach(function (element) {
 					element.clicked = false;
 				});
-				//console.log('clicked', model.products[0].clicked);
+				
 				
 
 			})

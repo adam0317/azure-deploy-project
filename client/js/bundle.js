@@ -701,8 +701,6 @@
 			cartService.addToCart(product);
 			product.clicked = !product.clicked;
 			$timeout(function () {
-				console.log('timeout fired');
-
 				product.clicked = !product.clicked;
 			}, 2000);
 		};
@@ -712,8 +710,6 @@
 				model.products.forEach(function (element) {
 					element.clicked = false;
 				});
-				//console.log('clicked', model.products[0].clicked);
-
 			});
 		}
 		getProducts();
