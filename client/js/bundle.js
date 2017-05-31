@@ -440,12 +440,12 @@
 		model.loggedIn = false;
 
 		userService.checkToken().then(function (response) {
-		
+
 			if (response.data.id) {
 				model.loggedIn = true;
-				
+				console.log('logged in');
 			} else {
-			
+				console.log('not logged in');
 			}
 		});
 
@@ -593,14 +593,17 @@
 			cartService.addToCart(product);
 		};
 
-		var getProducts = function getProducts() {
+		// var getProducts = () => {
 
-			return productService.getProducts().then(function (response) {
-				model.products = response;
-				model.mainProduct = model.products[Math.floor(Math.random() * model.products.length)];
-			});
-		};
-		getProducts();
+		// 	return productService.getProducts().then((response) => {
+		// 		model.products = response;
+		// 		model.mainProduct = model.products[Math.floor((Math.random() * model.products.length))];
+
+		// 	})
+
+
+		// }
+		// getProducts();
 	}
 })();
 
@@ -629,9 +632,9 @@
 		});
 
 		function isLoggedIn() {
-			userService.checkToken().then(function (response) {			
+			userService.checkToken().then(function (response) {
 				if (response.data.id) {
-					model.loggedIn = true;				
+					model.loggedIn = true;
 					return;
 				} else {
 					model.loggedIn = false;
@@ -687,18 +690,33 @@
 
 		templateUrl: 'products/product-grid.html',
 		controller: productGridController,
-		controllerAs: 'model',
-		bindings: {
-			products: '<'
-		}
+		controllerAs: 'model'
 
 	});
 
-	function productGridController(productService, cartService) {
+	function productGridController(productService, cartService, $timeout) {
 		var model = this;
+
 		model.addToCart = function (product) {
 			cartService.addToCart(product);
+			product.clicked = !product.clicked;
+			$timeout(function () {
+				console.log('timeout fired');
+
+				product.clicked = !product.clicked;
+			}, 2000);
 		};
+		function getProducts() {
+			productService.getProducts().then(function (response) {
+				model.products = response;
+				model.products.forEach(function (element) {
+					element.clicked = false;
+				});
+				//console.log('clicked', model.products[0].clicked);
+
+			});
+		}
+		getProducts();
 	}
 })();
 

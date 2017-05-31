@@ -22,17 +22,17 @@
 		}
 
 
-		var getProducts = () => {
+		// var getProducts = () => {
 
-			return productService.getProducts().then((response) => {
-				model.products = response;
-				model.mainProduct = model.products[Math.floor((Math.random() * model.products.length))];
+		// 	return productService.getProducts().then((response) => {
+		// 		model.products = response;
+		// 		model.mainProduct = model.products[Math.floor((Math.random() * model.products.length))];
 				
-			})
+		// 	})
 
 
-		}
-		getProducts();
+		// }
+		// getProducts();
 
 	}
 })();

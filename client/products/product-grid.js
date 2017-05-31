@@ -5,18 +5,34 @@
 
 		templateUrl: 'products/product-grid.html',
 		controller: productGridController,
-		controllerAs: 'model',
-		bindings: {
-			products: '<'
-		}
-		
-		
+		controllerAs: 'model'
+
+
 	});
 
-	function productGridController(productService, cartService) {
+	function productGridController(productService, cartService, $timeout) {
 		var model = this;
-		model.addToCart =  (product) => {
+
+		model.addToCart = (product) => {
 			cartService.addToCart(product)
+			product.clicked = !product.clicked;
+			$timeout(function () {
+				product.clicked = !product.clicked;
+			}, 2000)
+
 		}
+		function getProducts() {
+			productService.getProducts().then(function (response) {
+				model.products = response;
+				model.products.forEach(function (element) {
+					element.clicked = false;
+				});
+				//console.log('clicked', model.products[0].clicked);
+				
+
+			})
+		}
+		getProducts();
+	
 	}
 })();
